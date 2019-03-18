@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+
+
+<mapper namespace="com.orgweb.dao.UploadFileDao">
+    <!-- 映射结果集 -->
+	<resultMap id="filesResultMap" type="com.orgweb.entitydto.UploadFile">
+		<id property="fileId" column="fileId" jdbcType="BIGINT"/>
+    	<result property="bodyId" column="bodyId" jdbcType="BIGINT"/>
+    	<result property="platformId" column="platformId" jdbcType="BIGINT"/>
+    	<result property="period" column="period" jdbcType="VARCHAR"/>
+    	<result property="newFileName" column="newFileName" jdbcType="VARCHAR"/>
+    	<result property="fileName" column="fileName" jdbcType="VARCHAR"/>
+    	<result property="type" column="type" jdbcType="VARCHAR"/>
+    	<result property="fileType" column="fileType" jdbcType="VARCHAR"/>
+    	<result property="location" column="location" jdbcType="VARCHAR"/>
+    	<result property="memo" column="memo" jdbcType="VARCHAR"/>
+    	<result property="delFlag" column="delFlag" jdbcType="INTEGER"/>
+    	<result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
+    	<result property="creator" column="creator" jdbcType="VARCHAR"/>
+    	<result property="updateTime" column="updateTime" jdbcType="TIMESTAMP"/>
+    	<result property="updator" column="updator" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="filesColumnList">
+	    <![CDATA[
+			fileId,bodyId,platformId,period,newFileName,fileName,type,fileType,location,memo,delFlag,createTime,creator,updateTime,updator
+	    ]]>
+	</sql>
+	
+	<!-- 根据主键查询 -->
+	<select id="queryUploadFileById" resultMap="filesResultMap"  parameterType="java.lang.Integer">
+		SELECT <include refid="filesColumnList" />
+	    <![CDATA[
+	    FROM s_files 
+        WHERE 
+	        fileId = #{fileId,jdbcType=BIGINT}
+	    ]]>
+	</select>
+	
+	<!-- 根据条件查询 -->
+	<select id="queryAllUploadFiles" resultMap="filesResultMap"   parameterType="com.orgweb.entitydto.UploadFile">
+		SELECT <include refid="filesColumnList" />
+	    <![CDATA[
+	    FROM s_files 
+	    ]]>
+        <where>	  
+		       <if test="condition != null and condition.fileId != null">
+					 fileId = #{condition.fileId,jdbcType=BIGINT}
+			   </if>
+		       <if test="condition != null and condition.bodyId != null">
+					AND bodyId = #{condition.bodyId,jdbcType=BIGINT}
+			   </if>
+		       <if test="condition != null and condition.platformId != null">
+					AND platformId = #{condition.platformId,jdbcType=BIGINT}
+			   </if>
+		       <if test="condition != null and condition.period != null">
+					AND period = #{condition.period,jdbcType=VARCHAR}
+			   </if>
+		       <if test="condition != null and condition.newFileName != null">
+					AND newFileName = #{condition.newFileName,jdbcType=VARCHAR}
+			   </if>
+		       <if test="condition != null and condition.fileName != null">
+					AND fileName = #{condition.fileName,jdbcType=VARCHAR}
+			   </if>
+		       <if test="condition != null and condition.type != null">
+					AND type = #{condition.type,jdbcType=VARCHAR}
+			   </if>
+		       <if test="condition != null and condition.fileType != null">
+					AND fileType = #{condition.fileType,jdbcType=VARCHAR}
+			   </if>
+		       <if test="condition != null and condition.location != null">
+					AND location = #{condition.location,jdbcType=VARCHAR}
+			   </if>
+		       <if test="condition != null and condition.memo != null">
+					AND memo = #{condition.memo,jdbcType=VARCHAR}
+			   </if>
+		       <if test="condition != null and condition.delFlag != null">
+					AND delFlag = #{condition.delFlag,jdbcType=INTEGER}
+			   </if>
+		       <if test="condition != null and condition.createTime != null">
+					AND createTime = #{condition.createTime,jdbcType=TIMESTAMP}
+			   </if>
+		       <if test="condition != null and condition.creator != null">
+					AND creator = #{condition.creator,jdbcType=VARCHAR}
+			   </if>
+		       <if test="condition != null and condition.updateTime != null">
+					AND updateTime = #{condition.updateTime,jdbcType=TIMESTAMP}
+			   </if>
+		       <if test="condition != null and condition.updator != null">
+					AND updator = #{condition.updator,jdbcType=VARCHAR}
+			   </if>
+		</where>
+	</select>
+	
+	<!-- 根据ID删除 -->
+    <delete id="deleteUploadFile"  parameterType="java.lang.Integer">
+	    <![CDATA[
+	        DELETE FROM s_files 
+	        WHERE
+	        fileId = #{fileId,jdbcType=BIGINT}
+	    ]]>
+    </delete>
+   
+  	
+  	<!-- 根据参数对象中有值的进行插入-->
+	<insert id="insertUploadFileBySaveMethod" parameterType="com.orgweb.entitydto.UploadFile" >
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="fileId">
+			SELECT LAST_INSERT_ID() AS fileId
+		</selectKey>
+		insert into s_files
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+	     	
+	     	<if test="bodyId != null" >
+		    bodyId,
+		  	</if>
+	     	<if test="platformId != null" >
+		    platformId,
+		  	</if>
+	     	<if test="period != null" >
+		    period,
+		  	</if>
+	     	<if test="newFileName != null" >
+		    newFileName,
+		  	</if>
+	     	<if test="fileName != null" >
+		    fileName,
+		  	</if>
+	     	<if test="type != null" >
+		    type,
+		  	</if>
+	     	<if test="fileType != null" >
+		    fileType,
+		  	</if>
+	     	<if test="location != null" >
+		    location,
+		  	</if>
+	     	<if test="memo != null" >
+		    memo,
+		  	</if>
+	     	<if test="delFlag != null" >
+		    delFlag,
+		  	</if>
+	     	<if test="createTime != null" >
+		    createTime,
+		  	</if>
+	     	<if test="creator != null" >
+		    creator,
+		  	</if>
+	     	<if test="updateTime != null" >
+		    updateTime,
+		  	</if>
+	     	<if test="updator != null" >
+		    updator,
+		  	</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+	     	
+	     	<if test="bodyId != null" >
+		    #{bodyId,jdbcType=BIGINT},
+		  	</if>
+	     	<if test="platformId != null" >
+		    #{platformId,jdbcType=BIGINT},
+		  	</if>
+	     	<if test="period != null" >
+		    #{period,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="newFileName != null" >
+		    #{newFileName,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="fileName != null" >
+		    #{fileName,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="type != null" >
+		    #{type,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="fileType != null" >
+		    #{fileType,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="location != null" >
+		    #{location,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="memo != null" >
+		    #{memo,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="delFlag != null" >
+		    #{delFlag,jdbcType=INTEGER},
+		  	</if>
+	     	<if test="createTime != null" >
+		    #{createTime,jdbcType=TIMESTAMP},
+		  	</if>
+	     	<if test="creator != null" >
+		    #{creator,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="updateTime != null" >
+		    #{updateTime,jdbcType=TIMESTAMP},
+		  	</if>
+	     	<if test="updator != null" >
+		    #{updator,jdbcType=VARCHAR},
+		  	</if>
+		</trim>
+	</insert>
+	
+	
+	<!-- 根据ID进行更新 -->
+	<update id="updateUploadFile"  parameterType="com.orgweb.entitydto.UploadFile">
+		update s_files
+		<set>
+			<if test="fileId != null" >
+			 fileId = #{fileId,jdbcType=BIGINT},
+			</if>
+			<if test="bodyId != null" >
+			 bodyId = #{bodyId,jdbcType=BIGINT},
+			</if>
+			<if test="platformId != null" >
+			 platformId = #{platformId,jdbcType=BIGINT},
+			</if>
+			<if test="period != null" >
+			 period = #{period,jdbcType=VARCHAR},
+			</if>
+			<if test="newFileName != null" >
+			 newFileName = #{newFileName,jdbcType=VARCHAR},
+			</if>
+			<if test="fileName != null" >
+			 fileName = #{fileName,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null" >
+			 type = #{type,jdbcType=VARCHAR},
+			</if>
+			<if test="fileType != null" >
+			 fileType = #{fileType,jdbcType=VARCHAR},
+			</if>
+			<if test="location != null" >
+			 location = #{location,jdbcType=VARCHAR},
+			</if>
+			<if test="memo != null" >
+			 memo = #{memo,jdbcType=VARCHAR},
+			</if>
+			<if test="delFlag != null" >
+			 delFlag = #{delFlag,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null" >
+			 createTime = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creator != null" >
+			 creator = #{creator,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null" >
+			 updateTime = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updator != null" >
+			 updator = #{updator,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where
+			fileId = #{fileId,jdbcType=BIGINT}
+	</update>
+
+	<!-- 唯一性校验，返回重复数据的数量 -->
+	<select id="getCountOfUKByObj" resultType="java.lang.Integer" 
+			parameterType="com.orgweb.entitydto.UploadFile">
+		SELECT
+		 COUNT(1) AS NUM
+		 <![CDATA[
+	    FROM s_files
+	    ]]>
+		<where>
+			1=1 
+		</where>
+	</select>
+	
+	<sql id="findSqlId">
+		<where>	  
+		       <if test="condition != null and condition.fileId != null">
+					 fileId = #{condition.fileId,jdbcType=BIGINT}
+			   </if>
+		       <if test="condition != null and condition.bodyId != null">
+					AND bodyId = #{condition.bodyId,jdbcType=BIGINT}
+			   </if>
+		       <if test="condition != null and condition.platformId != null">
+					AND platformId = #{condition.platformId,jdbcType=BIGINT}
+			   </if>
+		       <if test="condition != null and condition.period != null">
+					AND period = #{condition.period,jdbcType=VARCHAR}
+			   </if>
+		       <if test="condition != null and condition.newFileName != null">
+					AND newFileName = #{condition.newFileName,jdbcType=VARCHAR}
+			   </if>
+		       <if test="condition != null and condition.fileName != null">
+					AND fileName = #{condition.fileName,jdbcType=VARCHAR}
+			   </if>
+		       <if test="condition != null and condition.type != null">
+					AND type = #{condition.type,jdbcType=VARCHAR}
+			   </if>
+		       <if test="condition != null and condition.fileType != null">
+					AND fileType = #{condition.fileType,jdbcType=VARCHAR}
+			   </if>
+		       <if test="condition != null and condition.location != null">
+					AND location = #{condition.location,jdbcType=VARCHAR}
+			   </if>
+		       <if test="condition != null and condition.memo != null">
+					AND memo = #{condition.memo,jdbcType=VARCHAR}
+			   </if>
+		       <if test="condition != null and condition.delFlag != null">
+					AND delFlag = #{condition.delFlag,jdbcType=INTEGER}
+			   </if>
+		       <if test="condition != null and condition.createTime != null">
+					AND createTime = #{condition.createTime,jdbcType=TIMESTAMP}
+			   </if>
+		       <if test="condition != null and condition.creator != null">
+					AND creator = #{condition.creator,jdbcType=VARCHAR}
+			   </if>
+		       <if test="condition != null and condition.updateTime != null">
+					AND updateTime = #{condition.updateTime,jdbcType=TIMESTAMP}
+			   </if>
+		       <if test="condition != null and condition.updator != null">
+					AND updator = #{condition.updator,jdbcType=VARCHAR}
+			   </if>
+		</where>
+	</sql>
+	<!-- 综合查询-->
+	<select id="findFileInfo" resultMap="filesResultMap">
+		SELECT <include refid="filesColumnList" />
+	    <![CDATA[
+	    	FROM s_files
+	    ]]>
+		<where>
+			<if test="condition != null and condition.period != null">
+				period = #{condition.period,jdbcType=VARCHAR}
+			</if>
+			<if test="condition != null and condition.platformId != null">
+				AND platformId = #{condition.platformId,jdbcType=BIGINT}
+			 </if>
+		</where>
+		order by fileId
+		LIMIT #{pageNum},#{pageSize}
+	</select> 
+	<select id="findFileCount" resultType="java.lang.Integer">
+		SELECT count(fileId)
+	    <![CDATA[
+	    	FROM s_files
+	    ]]>
+		 <where>
+			<if test="condition != null and condition.period != null">
+				period = #{condition.period,jdbcType=VARCHAR}
+			</if>
+			<if test="condition != null and condition.platformId != null">
+				AND platformId = #{condition.platformId,jdbcType=BIGINT}
+			 </if>
+		</where>
+	</select>
+	
+</mapper>
+

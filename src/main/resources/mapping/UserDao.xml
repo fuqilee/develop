@@ -1,0 +1,604 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+
+
+<mapper namespace="com.orgweb.dao.UserDao">
+
+	<!-- 映射结果集 -->
+	<resultMap id="userInfoResultMap" type="com.orgweb.entitydto.UserInfo">
+		<id property="id" column="id" jdbcType="BIGINT"/>
+    	<result property="userId" column="userId" jdbcType="VARCHAR"/>
+    	<result property="period" column="period" jdbcType="VARCHAR"/>
+    	<result property="userType" column="userType" jdbcType="VARCHAR"/>
+    	<result property="platformId" column="platformId" jdbcType="BIGINT"/>
+    	<result property="nickname" column="nickname" jdbcType="VARCHAR"/>
+    	<result property="name" column="name" jdbcType="VARCHAR"/>
+    	<result property="age" column="age" jdbcType="INTEGER"/>
+    	<result property="idCardNumber" column="idCardNumber" jdbcType="VARCHAR"/>
+    	<result property="phone" column="phone" jdbcType="VARCHAR"/>
+    	<result property="email" column="email" jdbcType="VARCHAR"/>
+    	<result property="recommendedPhone" column="recommendedPhone" jdbcType="VARCHAR"/>
+    	<result property="registrationTime" column="registrationTime" jdbcType="TIMESTAMP"/>
+    	<result property="gender" column="gender" jdbcType="VARCHAR"/>
+    	<result property="nationality" column="nationality" jdbcType="VARCHAR"/>
+    	<result property="nation" column="nation" jdbcType="VARCHAR"/>
+    	<result property="birthday" column="birthday" jdbcType="DATE"/>
+    	<result property="permanentProvince" column="permanentProvince" jdbcType="VARCHAR"/>
+    	<result property="permanentCity" column="permanentCity" jdbcType="VARCHAR"/>
+    	<result property="address" column="address" jdbcType="VARCHAR"/>
+    	<result property="riskLover" column="riskLover" jdbcType="VARCHAR"/>
+    	<result property="maritalStatus" column="maritalStatus" jdbcType="VARCHAR"/>
+    	<result property="houSesituation" column="houSesituation" jdbcType="VARCHAR"/>
+    	<result property="carSesituation" column="carSesituation" jdbcType="VARCHAR"/>
+    	<result property="educationDegree" column="educationDegree" jdbcType="VARCHAR"/>
+    	<result property="enterpriseName" column="enterpriseName" jdbcType="VARCHAR"/>
+    	<result property="organizationCode" column="organizationCode" jdbcType="VARCHAR"/>
+    	<result property="egistrationNumber" column="egistrationNumber" jdbcType="VARCHAR"/>
+    	<result property="delFlag" column="delFlag" jdbcType="INTEGER"/>
+    	<result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
+    	<result property="creator" column="creator" jdbcType="VARCHAR"/>
+    	<result property="updateTime" column="updateTime" jdbcType="TIMESTAMP"/>
+    	<result property="updator" column="updator" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="userInfoColumnList">
+	    <![CDATA[
+			id,userId,period,userType,platformId,nickname,name,age,idCardNumber,phone,email,recommendedPhone,registrationTime,gender,nationality,nation,birthday,permanentProvince,permanentCity,address,riskLover,maritalStatus,houSesituation,carSesituation,educationDegree,enterpriseName,organizationCode,egistrationNumber,delFlag,createTime,creator,updateTime,updator
+	    ]]>
+	</sql>
+	
+	<!-- 根据主键查询 -->
+	<select id="queryUserInfoById" resultMap="userInfoResultMap"  parameterType="java.lang.Integer">
+		SELECT <include refid="userInfoColumnList" />
+	    <![CDATA[
+	    FROM s_user_info 
+        WHERE 
+	        id = #{id,jdbcType=BIGINT}
+	    ]]>
+	</select>
+	
+	<!-- 根据条件查询 -->
+	<select id="queryAllUserInfos" resultMap="userInfoResultMap"   parameterType="com.orgweb.entitydto.UserInfo">
+		SELECT <include refid="userInfoColumnList" />
+	    <![CDATA[
+	    FROM s_user_info 
+	    ]]>
+        <where>	  
+        	1=1      				
+		       <if test="condition != null and condition.id != null">
+					AND id = #{condition.id,jdbcType=BIGINT}
+			   </if>
+		       <if test="condition != null and condition.userId != null">
+					AND userId = #{condition.userId,jdbcType=VARCHAR}
+			   </if>
+		       <if test="condition != null and condition.period != null">
+					AND period = #{condition.period,jdbcType=VARCHAR}
+			   </if>
+		       <if test="condition != null and condition.userType != null">
+					AND userType = #{condition.userType,jdbcType=VARCHAR}
+			   </if>
+		       <if test="condition != null and condition.platformId != null">
+					AND platformId = #{condition.platformId,jdbcType=BIGINT}
+			   </if>
+		       <if test="condition != null and condition.nickname != null">
+					AND nickname = #{condition.nickname,jdbcType=VARCHAR}
+			   </if>
+		       <if test="condition != null and condition.name != null">
+					AND name = #{condition.name,jdbcType=VARCHAR}
+			   </if>
+		       <if test="condition != null and condition.age != null">
+					AND age = #{condition.age,jdbcType=INTEGER}
+			   </if>
+		       <if test="condition != null and condition.idCardNumber != null">
+					AND idCardNumber = #{condition.idCardNumber,jdbcType=VARCHAR}
+			   </if>
+		       <if test="condition != null and condition.phone != null">
+					AND phone = #{condition.phone,jdbcType=VARCHAR}
+			   </if>
+		       <if test="condition != null and condition.email != null">
+					AND email = #{condition.email,jdbcType=VARCHAR}
+			   </if>
+		       <if test="condition != null and condition.recommendedPhone != null">
+					AND recommendedPhone = #{condition.recommendedPhone,jdbcType=VARCHAR}
+			   </if>
+		       <if test="condition != null and condition.registrationTime != null">
+					AND registrationTime = #{condition.registrationTime,jdbcType=TIMESTAMP}
+			   </if>
+		       <if test="condition != null and condition.gender != null">
+					AND gender = #{condition.gender,jdbcType=VARCHAR}
+			   </if>
+		       <if test="condition != null and condition.nationality != null">
+					AND nationality = #{condition.nationality,jdbcType=VARCHAR}
+			   </if>
+		       <if test="condition != null and condition.nation != null">
+					AND nation = #{condition.nation,jdbcType=VARCHAR}
+			   </if>
+		       <if test="condition != null and condition.birthday != null">
+					AND birthday = #{condition.birthday,jdbcType=DATE}
+			   </if>
+		       <if test="condition != null and condition.permanentProvince != null">
+					AND permanentProvince = #{condition.permanentProvince,jdbcType=VARCHAR}
+			   </if>
+		       <if test="condition != null and condition.permanentCity != null">
+					AND permanentCity = #{condition.permanentCity,jdbcType=VARCHAR}
+			   </if>
+		       <if test="condition != null and condition.address != null">
+					AND address = #{condition.address,jdbcType=VARCHAR}
+			   </if>
+		       <if test="condition != null and condition.riskLover != null">
+					AND riskLover = #{condition.riskLover,jdbcType=VARCHAR}
+			   </if>
+		       <if test="condition != null and condition.maritalStatus != null">
+					AND maritalStatus = #{condition.maritalStatus,jdbcType=VARCHAR}
+			   </if>
+		       <if test="condition != null and condition.houSesituation != null">
+					AND houSesituation = #{condition.houSesituation,jdbcType=VARCHAR}
+			   </if>
+		       <if test="condition != null and condition.carSesituation != null">
+					AND carSesituation = #{condition.carSesituation,jdbcType=VARCHAR}
+			   </if>
+		       <if test="condition != null and condition.educationDegree != null">
+					AND educationDegree = #{condition.educationDegree,jdbcType=VARCHAR}
+			   </if>
+		       <if test="condition != null and condition.enterpriseName != null">
+					AND enterpriseName = #{condition.enterpriseName,jdbcType=VARCHAR}
+			   </if>
+		       <if test="condition != null and condition.organizationCode != null">
+					AND organizationCode = #{condition.organizationCode,jdbcType=VARCHAR}
+			   </if>
+		       <if test="condition != null and condition.egistrationNumber != null">
+					AND egistrationNumber = #{condition.egistrationNumber,jdbcType=VARCHAR}
+			   </if>
+		       <if test="condition != null and condition.delFlag != null">
+					AND delFlag = #{condition.delFlag,jdbcType=INTEGER}
+			   </if>
+		       <if test="condition != null and condition.createTime != null">
+					AND createTime = #{condition.createTime,jdbcType=TIMESTAMP}
+			   </if>
+		       <if test="condition != null and condition.creator != null">
+					AND creator = #{condition.creator,jdbcType=VARCHAR}
+			   </if>
+		       <if test="condition != null and condition.updateTime != null">
+					AND updateTime = #{condition.updateTime,jdbcType=TIMESTAMP}
+			   </if>
+		       <if test="condition != null and condition.updator != null">
+					AND updator = #{condition.updator,jdbcType=VARCHAR}
+			   </if>
+		</where>
+	</select>
+	
+	<!-- 根据ID删除 -->
+    <delete id="deleteUserInfo"  parameterType="java.lang.Integer">
+	    <![CDATA[
+	        DELETE FROM s_user_info 
+	        WHERE
+	        id = #{id,jdbcType=BIGINT}
+	    ]]>
+    </delete>
+   
+  	
+  	<!-- 根据参数对象中有值的进行插入-->
+	<insert id="insertUserInfoBySaveMethod" parameterType="com.orgweb.entitydto.UserInfo" >
+		insert into s_user_info
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+	     	<if test="id != null" >
+		    id,
+		  	</if>
+	     	<if test="userId != null" >
+		    userId,
+		  	</if>
+	     	<if test="period != null" >
+		    period,
+		  	</if>
+	     	<if test="userType != null" >
+		    userType,
+		  	</if>
+	     	<if test="platformId != null" >
+		    platformId,
+		  	</if>
+	     	<if test="nickname != null" >
+		    nickname,
+		  	</if>
+	     	<if test="name != null" >
+		    name,
+		  	</if>
+	     	<if test="age != null" >
+		    age,
+		  	</if>
+	     	<if test="idCardNumber != null" >
+		    idCardNumber,
+		  	</if>
+	     	<if test="phone != null" >
+		    phone,
+		  	</if>
+	     	<if test="email != null" >
+		    email,
+		  	</if>
+	     	<if test="recommendedPhone != null" >
+		    recommendedPhone,
+		  	</if>
+	     	<if test="registrationTime != null" >
+		    registrationTime,
+		  	</if>
+	     	<if test="gender != null" >
+		    gender,
+		  	</if>
+	     	<if test="nationality != null" >
+		    nationality,
+		  	</if>
+	     	<if test="nation != null" >
+		    nation,
+		  	</if>
+	     	<if test="birthday != null" >
+		    birthday,
+		  	</if>
+	     	<if test="permanentProvince != null" >
+		    permanentProvince,
+		  	</if>
+	     	<if test="permanentCity != null" >
+		    permanentCity,
+		  	</if>
+	     	<if test="address != null" >
+		    address,
+		  	</if>
+	     	<if test="riskLover != null" >
+		    riskLover,
+		  	</if>
+	     	<if test="maritalStatus != null" >
+		    maritalStatus,
+		  	</if>
+	     	<if test="houSesituation != null" >
+		    houSesituation,
+		  	</if>
+	     	<if test="carSesituation != null" >
+		    carSesituation,
+		  	</if>
+	     	<if test="educationDegree != null" >
+		    educationDegree,
+		  	</if>
+	     	<if test="enterpriseName != null" >
+		    enterpriseName,
+		  	</if>
+	     	<if test="organizationCode != null" >
+		    organizationCode,
+		  	</if>
+	     	<if test="egistrationNumber != null" >
+		    egistrationNumber,
+		  	</if>
+	     	<if test="delFlag != null" >
+		    delFlag,
+		  	</if>
+	     	<if test="createTime != null" >
+		    createTime,
+		  	</if>
+	     	<if test="creator != null" >
+		    creator,
+		  	</if>
+	     	<if test="updateTime != null" >
+		    updateTime,
+		  	</if>
+	     	<if test="updator != null" >
+		    updator,
+		  	</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+	     	<if test="id != null" >
+		    #{id,jdbcType=BIGINT},
+		  	</if>
+	     	<if test="userId != null" >
+		    #{userId,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="period != null" >
+		    #{period,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="userType != null" >
+		    #{userType,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="platformId != null" >
+		    #{platformId,jdbcType=BIGINT},
+		  	</if>
+	     	<if test="nickname != null" >
+		    #{nickname,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="name != null" >
+		    #{name,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="age != null" >
+		    #{age,jdbcType=INTEGER},
+		  	</if>
+	     	<if test="idCardNumber != null" >
+		    #{idCardNumber,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="phone != null" >
+		    #{phone,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="email != null" >
+		    #{email,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="recommendedPhone != null" >
+		    #{recommendedPhone,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="registrationTime != null" >
+		    #{registrationTime,jdbcType=TIMESTAMP},
+		  	</if>
+	     	<if test="gender != null" >
+		    #{gender,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="nationality != null" >
+		    #{nationality,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="nation != null" >
+		    #{nation,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="birthday != null" >
+		    #{birthday,jdbcType=DATE},
+		  	</if>
+	     	<if test="permanentProvince != null" >
+		    #{permanentProvince,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="permanentCity != null" >
+		    #{permanentCity,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="address != null" >
+		    #{address,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="riskLover != null" >
+		    #{riskLover,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="maritalStatus != null" >
+		    #{maritalStatus,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="houSesituation != null" >
+		    #{houSesituation,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="carSesituation != null" >
+		    #{carSesituation,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="educationDegree != null" >
+		    #{educationDegree,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="enterpriseName != null" >
+		    #{enterpriseName,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="organizationCode != null" >
+		    #{organizationCode,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="egistrationNumber != null" >
+		    #{egistrationNumber,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="delFlag != null" >
+		    #{delFlag,jdbcType=INTEGER},
+		  	</if>
+	     	<if test="createTime != null" >
+		    #{createTime,jdbcType=TIMESTAMP},
+		  	</if>
+	     	<if test="creator != null" >
+		    #{creator,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="updateTime != null" >
+		    #{updateTime,jdbcType=TIMESTAMP},
+		  	</if>
+	     	<if test="updator != null" >
+		    #{updator,jdbcType=VARCHAR},
+		  	</if>
+		</trim>
+	</insert>
+	
+	
+	<!-- 根据ID进行更新 -->
+	<update id="updateUserInfo"  parameterType="com.orgweb.entitydto.UserInfo">
+		update s_user_info
+		<set>
+			<if test="id != null" >
+			 id = #{id,jdbcType=BIGINT},
+			</if>
+			<if test="userId != null" >
+			 userId = #{userId,jdbcType=VARCHAR},
+			</if>
+			<if test="period != null" >
+			 period = #{period,jdbcType=VARCHAR},
+			</if>
+			<if test="userType != null" >
+			 userType = #{userType,jdbcType=VARCHAR},
+			</if>
+			<if test="platformId != null" >
+			 platformId = #{platformId,jdbcType=BIGINT},
+			</if>
+			<if test="nickname != null" >
+			 nickname = #{nickname,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null" >
+			 name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="age != null" >
+			 age = #{age,jdbcType=INTEGER},
+			</if>
+			<if test="idCardNumber != null" >
+			 idCardNumber = #{idCardNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null" >
+			 phone = #{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null" >
+			 email = #{email,jdbcType=VARCHAR},
+			</if>
+			<if test="recommendedPhone != null" >
+			 recommendedPhone = #{recommendedPhone,jdbcType=VARCHAR},
+			</if>
+			<if test="registrationTime != null" >
+			 registrationTime = #{registrationTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="gender != null" >
+			 gender = #{gender,jdbcType=VARCHAR},
+			</if>
+			<if test="nationality != null" >
+			 nationality = #{nationality,jdbcType=VARCHAR},
+			</if>
+			<if test="nation != null" >
+			 nation = #{nation,jdbcType=VARCHAR},
+			</if>
+			<if test="birthday != null" >
+			 birthday = #{birthday,jdbcType=DATE},
+			</if>
+			<if test="permanentProvince != null" >
+			 permanentProvince = #{permanentProvince,jdbcType=VARCHAR},
+			</if>
+			<if test="permanentCity != null" >
+			 permanentCity = #{permanentCity,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null" >
+			 address = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="riskLover != null" >
+			 riskLover = #{riskLover,jdbcType=VARCHAR},
+			</if>
+			<if test="maritalStatus != null" >
+			 maritalStatus = #{maritalStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="houSesituation != null" >
+			 houSesituation = #{houSesituation,jdbcType=VARCHAR},
+			</if>
+			<if test="carSesituation != null" >
+			 carSesituation = #{carSesituation,jdbcType=VARCHAR},
+			</if>
+			<if test="educationDegree != null" >
+			 educationDegree = #{educationDegree,jdbcType=VARCHAR},
+			</if>
+			<if test="enterpriseName != null" >
+			 enterpriseName = #{enterpriseName,jdbcType=VARCHAR},
+			</if>
+			<if test="organizationCode != null" >
+			 organizationCode = #{organizationCode,jdbcType=VARCHAR},
+			</if>
+			<if test="egistrationNumber != null" >
+			 egistrationNumber = #{egistrationNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="delFlag != null" >
+			 delFlag = #{delFlag,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null" >
+			 createTime = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creator != null" >
+			 creator = #{creator,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null" >
+			 updateTime = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updator != null" >
+			 updator = #{updator,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where
+			id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<!-- 唯一性校验，返回重复数据的数量 -->
+	<select id="getCountOfUKByObj" resultType="java.lang.Integer" 
+			parameterType="com.orgweb.entitydto.UserInfo">
+		SELECT
+		 COUNT(1) AS NUM
+		 <![CDATA[
+	    FROM s_user_info
+	    ]]>
+		<where>
+			1=1 
+		</where>
+	</select>
+	<select id="testUserInfo" resultMap="userInfoResultMap">
+	   <if test="1==1">  
+			SELECT  <include refid="userInfoColumnList" />
+		    <![CDATA[ 
+				
+			FROM
+			    s_user_info
+			limit 0,1
+			]]>
+		</if>
+	</select>
+	
+	<!--  <select id="getAllType"  resultType="java.util.Map" >
+		select  topicId,topicName from tb_topic where  delFlag=0 
+	</select>  -->
+	 <select id="getAllType"  resultType="java.util.Map" >
+		SELECT 
+			a.platformShortName,
+			b.platformId,
+			FORMAT(b.superviseScore,2) as superviseScore,
+			FORMAT(b.lastScore,2) as lastScore
+		FROM s_platform_info a, s_supervise_result b  
+		WHERE a.platformid = b.platformId
+		AND 
+		DATE_FORMAT(b.sysEvaluateTime,'%Y-%m-%d') = DATE_FORMAT('2016-12-27', '%Y-%m-%d')
+		GROUP BY 	a.platformShortName,
+			b.platformId,
+			b.superviseScore,
+			b.lastScore
+	</select> 
+	<sql id="sqlWhere">
+		 <where>
+		 	<foreach collection="map" item="value" index="key" separator=" and "  >
+			 	<choose>
+			 		<when test='key.contains("orderby")'>
+		 			</when>
+		 			<when test='value!=null and value!=""  and key.endsWith("MaxNum")'>
+		 				<![CDATA[  ${key.substring(0,key.indexOf("MaxNum"))}<=#{value}  ]]>
+		 			</when>
+		 			<when test='value!=null and value!=""  and key.endsWith("MinNum")'>
+		 				<![CDATA[  ${key.substring(0,key.indexOf("MinNum"))}>=#{value} ]]>
+		 			</when>
+		 			<when test='value!=null and value!="" and key.endsWith("NoEqual") '>
+		 				 ${key.substring(0,key.indexOf("NoEqual"))}!=#{value}
+		 			</when>
+		 			<when test='value!=null and value!="" and key.endsWith("In") '>
+		 				${key.substring(0,key.indexOf("In"))} in (
+			 				<foreach collection="value" item="item" separator=",">
+			 					#{item}
+			 				</foreach>
+		 				 )
+		 			</when>
+		 			<when test='value!=null and value!="" and key.endsWith("Like") '>
+		 				 ${key.substring(0,key.indexOf("Like"))} like '%${value}%'
+		 			</when>
+		 			<when test='value!=null and value!="" '>
+		 				 ${key}=#{value}
+		 			</when>
+		 			<otherwise>
+		 			</otherwise>
+			 	</choose>
+		 		
+		    </foreach>
+		 </where>
+	</sql>
+	<select id="testSql"  resultType="java.util.Map" >
+		${sql}
+		 <include refid="sqlWhere"/>
+		 <if test='map.orderby!=null and map.orderby!=""'>
+		 	 order by ${map.orderby} desc
+		 </if>
+	</select> 
+	
+	<select id="testSqlCache"  resultType="java.util.Map" >
+		select userId,userType from s_user_info where userType=#{map.userType}
+	</select>  
+	
+	
+	<select id="testIfNull"  resultType="java.util.Map" >
+		select * from s_platform_info_eval 
+		<where>
+				<foreach collection="map" item="value" index="key" separator=" and "  >
+					<if test='value!=null and !"".equals(value.toString()) ' >
+						${key}=#{value}
+					</if>
+				</foreach>
+		</where>
+		
+	</select> 
+	
+	
+</mapper>
+

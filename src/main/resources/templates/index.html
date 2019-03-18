@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--<html lang="en">-->
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/common/bootstrap-3.3.7/css/bootstrap.css" />
+    <link rel="stylesheet" href="/common/fontawesome/font-awesome.css" />
+    <link rel="stylesheet" href="/common/bootstrap-table/src/bootstrap-table.css" type="text/css"  />
+    <link rel="stylesheet" href="/common/bootstrap3-editable/css/bootstrap-editable.css" type="text/css"  />
+    <script type="text/javascript" src="/common/js/jquery/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/common/artDialog4.1.6/jquery.artDialog.js?skin=idialog"></script>
+    <script type="text/javascript" src="/common/artDialog4.1.6/plugins/iframeTools.js"></script>
+    <script type="text/javascript" src="/common/js/jquery/jquery.extends.js"></script>
+    <script type="text/javascript" src="/common/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/common/js/share/share.js"></script>
+</head>
+<body>
+<!-- 头部 -->
+<div class="header">
+
+</div>
+<div id="container" class="container-fluid">
+  <!--  <span th:text="${session.SPRING_SECURITY_CONTEXT.authentication.principal.username}" th:unless="${session.SPRING_SECURITY_CONTEXT== null}"> 用户名称${session.SPRING_SECURITY_CONTEXT.authentication.principal.username} </span>-->
+
+    <!--<div align="center" style="margin-top: 15px" sec:authorize="!isAuthenticated()">
+        <h4 style="color: blue;">欢迎您，亲爱的召唤师!</h4>
+        ${session.SPRING_SECURITY_CONTEXT.authentication.principal.username}
+    </div>
+    <div align="center" style="margin-top: 15px" sec:authorize="isAuthenticated()">
+        <h4 style="color: blue;">召唤师 <span sec:authentication="name"></span>
+            ! 您的段位为：<span sec:authentication="principal.authorities"></span>
+            ${session.SPRING_SECURITY_CONTEXT.authentication.principal.username}
+        </h4>
+    </div>-->
+</div>
+
+</body>
+<script>
+    var basePath='';
+    $(function () {
+        $('.header').load('/head/header');
+    });
+</script>
+</html>

@@ -1,0 +1,790 @@
+body{
+	font: 400 12px/24px simsun;
+}
+
+/*鍏叡  */
+.fs_Main {
+    margin: 20px auto 30px;
+    overflow: hidden;
+}
+.credit_box{
+	background: #FFFFFF;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #ececec;
+    border-top: 0;
+}
+
+.cre_txt{
+	width:306px;
+	height: 28px;
+	border: 1px solid #c3c4c9;
+	padding-left: 8px;
+}
+
+.btn-default{
+	width:90px;
+	height: 28px;
+	background: #f9f9f9;
+	border:1px solid #cdcdcd; 
+	font:400 12px/26px simsun;
+	border-radius:0;
+}
+
+.cre_btn,.btn-jk{
+	max-width: 90px;
+	height: 26px;
+	text-align:center;
+	background: #c30a02;
+	border:1px solid #8c0600; 
+	color: #fff;
+	font:400 12px/26px simsun;
+	cursor: pointer;
+	padding:0 20px;
+	float: left;
+    margin-left: 10px;
+}
+.btn-jk{
+	width:90px;
+	height: 28px;
+	background: #1e77d1;
+	border-color:#0d57a2;
+}
+.cre_btn:hover{
+	background: #d50b03;
+}
+.btn-jk:hover{
+	background: #2282e3;
+}
+
+
+/* 缁煎悎鏌ヨ */
+.query_wrap{
+	width:100%;
+	overflow:hidden;
+	background: #ffffff;
+	margin: 20px auto;
+	border: 1px solid #ececec;
+}
+.sideMenu{
+	width:218px;
+	float: left;
+}
+.sideMenu dd a{
+	height: 60px;
+	display:block;
+	font: 600 16px/60px "FangSong";
+	text-align: center;
+	color: #575757;
+	cursor: pointer;
+}
+.menu_list dd a{
+	width:218px;
+	font: 200 14px/60px simsun;
+}
+.sideMenu dd a:hover{
+	background: #fafafa;
+}
+.sideMenu dd a.curLeft{
+	background: #f5f5f5;
+	border-left: 2px solid #c30a02;
+	color: #191919;
+}
+.menu_list dd a.curLeft{
+	font-weight: 600;
+}
+/* 鍙抽潰鍐呭 */
+.queryR{
+	width:980px;
+	border-left: 1px solid #ececec;
+	padding:0 10px;
+	min-height: 360px;
+}
+
+.queryR .qur_table span{
+	line-height: 10px;
+}
+.qu_top{
+	overflow:hidden;
+	border-bottom:1px solid #ececec; 
+	padding: 9px 10px;
+}
+.qu_list{
+	overflow: hidden;
+}
+.qu_list li{
+	float: left;
+	margin:0 40px 10px 0;
+}
+.qu_list span{
+	font:200 12px/26px simsun;
+	width: 100px;
+    display: inline-block;
+    text-align: right;
+}
+.qu_list li:nth-child(3n){
+	margin-right: 0;
+}
+.qu_list li.fr{
+	float: right;
+	margin-right: 0;
+}
+/* .sleBox{
+	width:186px; 
+	height:26px; 
+	line-height:26px;
+	border:1px solid #b6b6b6;
+  	background: url(../images/arrow_dn.png) no-repeat right+6px center #fff;  
+	display:block;
+	float: left;
+}
+.sleHid{ display:block; width:166px;height:26px; overflow:hidden; } 
+.sleOpt{width:186px; height:26px; background:none; border:0; font: 200 12px/26px simsun;}  
+ */
+.fs_inptxt{
+	width:186px;
+	height:26px; 
+	line-height:26px;
+	border:1px solid #c3c4c9;
+	padding-left: 6px;
+}
+
+.fs_box{
+	padding:10px 10px 20px;
+}
+
+
+
+
+
+
+/* 琛ㄦ牸 */
+/*table_box*/
+.table_box{
+	width: 100%;
+	border: 1px solid #ededed;
+	border-bottom: 0;
+}
+.table_box th,.table_box td{
+	text-align: center;
+	border-bottom: 1px solid #e2e7eb;
+	height: 39px;
+	font: 400 12px/40px simsun;
+	padding: 0 10px;
+}
+.table_box tr:nth-child(2n-1){
+	background: #fafafa;
+}
+.table_box th{
+	background: #f0f0f0;
+}
+.table_box td a{
+	color: #3f69fb;
+}
+.table_box td a:hover{
+	text-decoration: underline;
+}
+/* 骞冲彴淇℃伅 */
+.fs_title{
+	height: 56px;
+	width:100%;
+	background: #c30a02;
+	padding:0 20px;
+	color: #ffffff;
+	line-height: 56px;
+}
+.fs_title h1{
+	font: 600 18px/56px "FangSong";
+}
+
+.cre_ul{
+	overflow: hidden;
+	padding:20px 30px;
+}
+.cre_ul li{
+	float: left;
+	width:262px;
+	margin-right: 30px;
+	font-weight: 600;
+	line-height: 30px;
+}
+.cre_ul li.mr0,.queryr_lists .cre_ul_base li.mr0{
+	margin-right: 0px;
+}
+.cre_ul li span{
+	display: inline-block;
+	width: 150px;
+	font-weight: 200;
+}
+/* 骞冲彴淇℃伅 妯悜瀵艰埅 */
+.query_wrap .cre_ul_tt{
+	border-bottom: 1px solid #ededed;
+}
+.query_wrap .cre_ul_tt li{
+	float:left;
+	width:116px;
+	text-align:center;
+	height: 59px;
+	line-height: 60px;
+	margin: 0 27px;
+	font-size: 14px;
+	cursor: pointer;
+} 
+.query_wrap .cre_ul_tt li:hover{
+	/* border-bottom: 2px solid #c30a02; */
+	color: #c30a02;
+}
+.query_wrap .cre_ul_tt li.active{
+	color: #c30a02;
+	font-weight: 600;
+	border-bottom: 2px solid #c30a02; 
+}
+
+.tableDiv{
+	padding: 20px 10px;
+}
+
+/* 浼佷笟鍩烘湰淇℃伅琛� */
+.h4_tt{
+	border-bottom: 1px dashed #dfdfdf;
+	padding: 0 5px;
+	height:49px;
+	line-height: 50px;
+}
+.h4_tt h4{
+	font:600 14px/50px simsun;
+}
+
+.cre_ul_base{
+	padding: 10px;
+}
+.cre_ul_base li{
+	width:313px;
+	margin-right: 0px;
+}
+.cre_ul_base li span{
+	width:120px;
+}
+.cre_ul_base .w100{
+	width: 100%;
+}
+/* 骞冲彴鍩烘湰淇℃伅琛� */
+.queryr_lists{
+	padding:0 20px 20px;
+}
+
+.queryr_lists .cre_ul_base{
+	padding:10px 24px;
+}
+.queryr_lists .cre_ul_base li{
+	margin-right: 85px;
+}
+
+
+/*骞冲彴鍩烘湰淇℃伅琛�  end  */
+
+/* 缁煎悎鏌ヨ鏄庣粏 */
+.query_det{
+	padding:20px;
+}
+.query_detL{
+	width:244px;
+	/* height:556px; */
+	border:1px solid #ededed;
+	padding: 10px 14px 14px;
+}
+
+.ind_h2{
+	height: 34px;
+    overflow: hidden;
+}
+.ind_h2 i{
+	float: left;
+	width:2px;
+	height: 14px;
+	display: inline-block;
+	background: #c30a02;
+	margin: 0 10px;
+	margin-top: 10px;
+}
+.ind_h2 h2{
+	float: left;
+    height: 32px;
+    font: 600 16px/32px "FangSong";
+}
+
+
+.query_detbox{
+	width:216px;
+	min-height: 142px;
+	background: #f5f5f5;
+	padding: 14px 16px;
+}
+.query_detbox.pl30{
+	padding-left: 30px;
+}
+.query_detL p{
+	font-size: 14px;
+    line-height: 46px;
+}
+.query_detL p a{
+	color: #3f69fb;
+}
+.query_detL .query_detbox p{
+	line-height: 32px;
+}
+.query_detbox p span{
+	margin: 5px 5px 0 0;
+	display: inline;
+}
+.query_detboxl{
+	min-width: 80px;
+    text-align: center;
+}
+.query_detboxl h5{
+	color: #d82f1e;
+	font:400 46px/75px arial;
+}
+.query_detboxl samp{
+	font-size: 18px;
+	text-align: center;
+	display: block;
+}
+
+.query_detR{
+	width:876px;
+	height:498px;
+	border:1px solid #ededed;
+	background: #f2f2f2;
+	position: relative;
+}
+
+.query_details{
+	padding: 0 20px 20px;
+}
+.query_details ul{
+	clear: both;
+}
+.query_details li{
+	float: left;
+	margin-right: 40px;
+    padding-left: 20px;
+    line-height: 52px;
+}
+/* footer 璐ㄥ簳 */
+#pagePad {
+    padding-bottom: 60px;
+}
+#footer {
+    position: relative;
+    margin-top: -60px;
+    clear: both;
+}
+
+/* 鍒嗛〉 begin */
+.pageBox{
+    float: right;
+    margin:20px 0;
+    overflow: hidden;
+}
+.pageBox p{
+    float: left;
+    color: #999999;
+    font: 400 12px/34px simsun;
+    margin-right: 7px;
+}
+.pageBox ul{
+    float: left;
+    margin-right: 10px;
+}
+.pageBox ul li{
+    float: left;
+    width: 32px;
+    height: 33px;
+    line-height: 33px;
+}
+.pageBox ul li.last-br{
+    border-right: 1px solid #e1e6eb;
+}
+.pageBox ul li a{
+    display: block;
+    color: #5d5d5d;
+    height: 33px;
+    border: 1px solid #e1e6eb;
+    text-decoration: none;
+    text-align: center;
+    border-right: 0;
+}
+.pageBox ul li a:hover{
+    background-color: #eeeeee;
+    text-decoration: none;
+}
+.pageBox ul li a.page_active{
+	background-color: #cc2f28;
+    border: 1px solid #ab0700;
+    color: #fff;
+}
+
+.pageBox label{
+    float: left;
+    color: #999999;
+    font-weight: 200;
+}
+.pageBox input{
+    width: 33px;
+    height: 33px;
+    margin-right: 10px;
+    border: 1px solid #e1e6eb;
+}
+.pageBox div{
+    /*display: inline-block;*/
+    float: left;
+    width: 43px;
+    height: 33px;
+    background-color: #9a9a9a;
+    line-height: 33px;
+   	text-align: center;
+   	font:200 14px/34px "microsoft yahei";
+}
+.pageBox div a{
+    color: #f8f8f8;
+}
+
+/* 鍥剧墖鍦板潃瑕佷慨鏀� */
+.pageBox .adl_bt{
+    background: url('../image/adl.png') no-repeat center center;
+}
+.pageBox .al_bt{
+    background: url('../image/al.png') no-repeat center center;
+}
+.pageBox .adr_bt{
+    background: url('../image/adr.png') no-repeat center center;
+}
+.pageBox .ar_bt{
+    background: url('../image/ar.png') no-repeat center center;
+}
+/* 鍒嗛〉 end */
+
+
+/* 閿熸枻鎷烽敓鏂ゆ嫹 */
+.rank01,.rank02,.rank03,.rank04{
+	width:22px;
+	height:20px;
+	background: #d82f1e;
+	font:600 12px/20px "arial narrow";
+	text-align: center;
+	color:#ffffff;
+	display: inline-block;
+}
+.rank02{
+	background: #e06d10;
+}
+.rank03{
+	background: #f4a928;
+}
+.rank04{
+	background: #01a55c;
+}
+
+
+/*閿熶茎鎲嬫嫹閿熸枻鎷烽敓鏂ゆ嫹閿熸枻鎷烽敓锟� */
+.fs_textarea{
+	width:450px;
+	height:120px;
+	line-height: 26px;
+    border: 1px solid #c3c4c9;
+    padding-left: 6px;
+    margin-bottom: 10px;
+}
+/* 閿熸枻鎷烽敓鑺ユ寜閽敓鏂ゆ嫹閿熸枻鎷峰紡 */
+.fs_save_button{
+	margin-left: 280px;
+    margin-bottom: 30px;
+}
+
+
+.cre_btn_al{
+	margin-left: 576px;
+	margin-bottom:10px;
+}
+
+/***********鍒楄〃鐪佺暐鍙疯ˉ鍏呰鏄庢牱寮�************/
+#showTip{
+	position:relative;
+}
+#showTip .contentTip{
+	display:none;
+	position: absolute;
+	margin-left:30px;
+	margin-top:10px;
+	border: 1px solid silver;
+	background: #eeeeee;
+	z-index: 99999;
+	padding: 5px;
+		
+}
+#showTip .contentTip .contentTipText{
+	font-family: fangsong;
+	font-size: 16px;
+	color: black;
+	line-height: 20px;
+}
+#showTip:hover .contentTip{
+	display:block;
+}
+
+
+/****************鎺掑簭*****************/
+/* .sorting{
+	cursor:pointer;
+}
+.sorting:after{
+	content:"\21C5";
+	color:#708090;
+	font-size: 14px;
+	margin-left: 5px;
+	font-weight: 600;
+}
+.sorting:hover{
+	background:#cccccc;
+}
+.ascIcon:after{
+	content:"\2191";
+	font-size: 12px;
+    color: red;
+}
+.descIcon:after{
+	content:"\2193";
+	font-size: 12px;
+    color: green;
+} */
+
+
+.sorting{
+	cursor:pointer;
+}
+.sorting i{
+	width: 7px;
+    height: 18px;
+	background: url('../images/arrow_updown.png') no-repeat;
+	display: inline-block;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+.ascIcon i{
+	width: 7px;
+    height: 18px;
+	background: url('../images/arrow_up.png') no-repeat;
+	display: inline-block;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+.descIcon i{
+	width: 7px;
+    height: 18px;
+	background: url('../images/arrow_down.png') no-repeat;
+	display: inline-block;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+.sorting:hover{
+	background:#cccccc;
+}
+/** file鏍峰紡 start*/
+.file {
+    position: relative;
+   /*  display: inline-block; */
+    background: #D0EEFF;
+    border: 1px solid #99D3F5;
+    border-radius: 4px;
+    padding: 5px 12px;
+    overflow: hidden;
+    color: #1E88C7;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 20px;
+    cursor:pointer;
+}
+.file input {
+    position: absolute;
+    /* font-size: 100px; */
+    right: 0;
+    top: 0;
+    opacity: 0;
+    width:75px;
+    cursor:pointer;
+}
+.file:hover {
+    background: #AADFFD;
+    border-color: #78C3F3;
+    color: #004974;
+    text-decoration: none;
+}
+/* .file input:hover {
+     background: #AADFFD;
+    border-color: #78C3F3;
+    color: #004974;
+    text-decoration: none;
+} */
+/** file鏍峰紡 end*/
+
+/**  寮瑰嚭妗嗘牱寮� */
+.modal-header{
+    background: #c30a02;
+    font: 600 18px/30px "FangSong";
+    color: #FFFFFF;
+}
+.close:hover, .close:focus {
+    color: #ffffff;
+    cursor: pointer;
+    filter: alpha(opacity=50);
+    opacity: .5;
+}
+.modal-header .close{
+	opacity: .9;
+}
+.Or-audit li{
+	width:350px;
+}
+.Or-audit li span{
+	width:180px;
+	font-weight:600;
+	
+}
+/**  寮瑰嚭妗嗘牱寮� end*/
+/* 鏌ヨ璇︽儏      */
+.Query_detaT{
+	width: 1199px;
+	height: 220px;
+	background: #ffffff;
+	border: 1px solid #f4f4f4;
+	margin-bottom: 20px;
+}
+.Query_detaC{
+	width: 610px;
+	height: 140px;
+	margin: 30px auto 0;
+}
+
+.Query_detaC ul{
+    width: 110px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+.Query_detaC ul li{
+    margin: 10px 0;
+    padding: 5px 8px;
+    color: #4b4b4b;
+    cursor: pointer;
+}
+.Query_detaC ul li.active,.red{
+    color: #c30a02;
+    font-weight: 600;
+}
+.Query_seach input{
+	height: 28px;
+	border-radius: 0;
+	border-color: #c3c4c9;
+	font-size: 12px;
+}
+.btn-red{
+	width: 98px;
+	height: 28px;
+	font: 200 12px/28px simsun;
+	background: #c30a02;
+	border: 1px solid #8c0600;
+	padding: 0;
+	border-radius: 0;
+	color: #FFFFFF;
+}
+.Query_detaC p{
+	font-weight: 600;
+	margin-top: 15px;
+}
+/************************绛涢�夋寜閽牱寮� start*****************************/
+.screenBtn{
+	float: left;
+	margin: 3px;
+	padding: 2px 15px;
+	cursor: pointer;
+	font-family: 榛戜綋;
+	font-size: 12px;
+	text-align: left;
+	border-radius:5px;
+	border: dashed 1px #FFFFFF;
+}
+
+.screenBtn:hover{
+	border-radius:5px;
+	background-color: #3366FF;
+}
+.cTitle{
+	float: left;
+}
+
+.qu_list .active{
+	border: dashed 1px blue;
+}
+
+#listTitle li{
+	margin-bottom: 0px;
+}
+
+.listText{
+	border-radius:5px;
+	background-color: blue;
+	color: #FFFFFF;
+	padding-left: 10px;
+	padding-right: 10px;
+	text-align: center;
+	vertical-align: middle;
+	margin-left: 20px;
+	margin-bottom: 5px;
+}
+
+.order_btn{
+	width:65px;
+	height:26px;
+	text-align: center;
+	background-color: #FFFFFF;
+	border: 1px solid #3366ff;
+	font: 400 12px/26px simsun;
+	cursor: pointer;
+	padding: 0 20px;
+	float: left;
+	margin-left: 5px;
+	border-radius:5px;
+}
+
+.order_active{
+	background-color: #3366FF;
+	color: #FFFFFF;
+}
+
+.isShowBtn{
+	width:80px;
+	height:30px;
+	text-align: center;
+	background-color: #efefef;
+	font: 400 12px/26px simsun;
+	cursor: pointer;
+	padding: 0 20px;
+	border-radius:5px;
+}
+
+.listNum{
+	font-size: 18px;
+	color: red;
+	margin: 0 5px;
+}
+/*li鐨勬牱寮�  */
+.licssForSelect{
+	width: 100%;
+	float: left;
+}
+.divcssForSelect{
+	display: table-cell;
+	width: 100%;
+}
+
+/************************绛涢�夋寜閽牱寮� start*****************************/

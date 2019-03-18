@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--基本表信息的增删改查  -->
+<mapper namespace="com.orgweb.dao.TableInfoColumnDao">
+		<!-- 公共查询 where条件 -->
+		<sql id="sqlWhere">
+		  <where>
+		 	<foreach collection="map" item="value" index="key" separator=" and "  >
+			 	<choose>
+			 		<when test='key.contains("orderby")'>
+		 			</when>
+		 			<when test='value!=null and !"".equals(value.toString()) and key.endsWith("MaxNum")'>
+		 				<![CDATA[  ${key.substring(0,key.indexOf("MaxNum"))}<=#{value}  ]]>
+		 			</when>
+		 			<when test='value!=null and !"".equals(value.toString())  and key.endsWith("MinNum")'>
+		 				<![CDATA[  ${key.substring(0,key.indexOf("MinNum"))}>=#{value} ]]>
+		 			</when>
+		 			<when test='value!=null and !"".equals(value.toString()) and key.endsWith("NoEqual") '>
+		 				 ${key.substring(0,key.indexOf("NoEqual"))}!=#{value}
+		 			</when>
+		 			<when test='value!=null and !"".equals(value.toString()) and key.endsWith("Like") '>
+		 				 ${key.substring(0,key.indexOf("Like"))} like '%${value}%'
+		 			</when>
+		 			<when test='value!=null and !"".equals(value.toString()) and key.endsWith("LikeRight") '>
+		 				 ${key.substring(0,key.indexOf("LikeRight"))} like '${value}%'
+		 			</when>
+		 			<when test='value!=null and !"".equals(value.toString()) and key.endsWith("LikeLeft") '>
+		 				 ${key.substring(0,key.indexOf("LikeLeft"))} like '%${value}'
+		 			</when>
+		 			<when test='value!=null and !"".equals(value.toString()) and key.endsWith("In") '>
+		 				${key.substring(0,key.indexOf("In"))} in (
+			 				<foreach collection="value" item="item" separator=",">
+			 					#{item}
+			 				</foreach>
+		 				 )
+		 			</when>
+		 			<when test='value!=null and !"".equals(value.toString())  '>
+		 				 ${key}=#{value}
+		 			</when>
+		 			<otherwise>
+		 			</otherwise>
+			 	</choose>
+		    </foreach>
+		 </where>
+	</sql>
+	<!-- * 	1  新增 addInfoForST -->
+	<insert id="addInfoForST" timeout="30">
+		<!-- <if test='tablename=="s_files"'>
+			<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="fileId">
+				SELECT LAST_INSERT_ID() AS fileId
+			</selectKey>
+		</if> -->
+		INSERT INTO ${tablename} (
+			<foreach collection="map" item="value" index="key" separator=","  >
+				<if test='value!=null and value!="" or value==0 '>
+					${key}
+				</if>
+			</foreach>
+		) VALUES (
+			<foreach collection="map.values" item="value" index="index" separator=","  >
+				<if test='value!=null and value!="" or value==0'>
+			     	#{value,jdbcType=VARCHAR}
+				</if>
+			</foreach>
+		)
+	</insert>
+	 <!-- *  2 删除deleteInfoForST -->
+	 <delete id="deleteInfoForST" timeout="30">
+		 delete from ${tablename}  
+		 <include refid="sqlWhere"/>
+	 </delete>
+	 <!-- *  3.1.1 查询一个list集合findInfoForSTGetList -->
+	 <select id="findInfoForSTGetList" resultType="java.util.HashMap" >
+		 select *  from ${tablename} 
+		 <include refid="sqlWhere"/>
+		 <if test='map.orderby!=null and map.orderby!=""'>
+		 	 order by ${map.orderby} 
+		 </if>
+	 </select>
+	 <!-- *  3.1.2 查询单条数据findInfoForSTGetSingleData -->
+	 <select id="findInfoForSTGetSingleData" resultType="java.util.HashMap">
+		 select *  from ${tablename} 
+		 <include refid="sqlWhere"/>
+		<!--  LIMIT 0,1 -->
+	 </select>
+	 <!-- *  3.2.1 分页查询findInfoForSTByPage -->
+	 <select id="findInfoForSTByPage" resultType="java.util.HashMap">
+		 select *  from ${tablename} 
+		 <include refid="sqlWhere"/>
+		 <if test='map.orderby!=null and map.orderby!=""'>
+		 	 order by ${map.orderby} 
+		 </if>
+		 LIMIT #{pageNum},#{pageSize}
+	 </select>
+	 <!-- *  3.2.2 分页查询数据数量findInfoForSTByPageCount -->
+	 <select id="findInfoForSTByPageCount" resultType="java.lang.Integer">
+		 select count(1) from ${tablename} 
+		<include refid="sqlWhere"/>
+	</select>
+	 <!-- *  4 修改modifyInfoForST -->
+	 <update id="modifyInfoForST" timeout="30">
+		update ${tablename}
+	    <set>
+		    <foreach collection="map.keys" item="key" index="index" separator=","  >
+		    	<if test='key!="id"'>
+		    		${key}=#{map[${key}]}
+		    	</if>
+			</foreach>
+	    </set>
+	    <where>
+		     <foreach collection="paramMap" item="value" index="key" separator=" and "  >
+		     		<choose>
+		     			<when test='value!=null and value!="" and key.endsWith("In") '>
+			 				${key.substring(0,key.indexOf("In"))} in (
+				 				<foreach collection="value" item="item" separator=",">
+				 					#{item}
+				 				</foreach>
+			 				 )
+			 			</when>
+			 			<when test="paramMap[key]!=null and paramMap[key]!=''">
+			 				${key}=#{value}
+			 			</when>
+		 				<otherwise></otherwise>
+		     		</choose>
+			</foreach>
+	    </where>
+	</update>
+	<!-- 批量新增数据 -->
+	<insert id="batchAddTableInfoColumn" timeout="30">
+		insert into s_basecolumn_config (id,tableid, columnname, columnename, isNull, isEqual,
+		isSystem, dataType, matchInfo, alertInfo, menuType, delFlag, 
+		createTime, creator, updateTime, updator,nm) 
+		SELECT id,tableid, columnname, columnename, isNull, isEqual,
+			isSystem, dataType, matchInfo, alertInfo, menuType, delFlag, 
+			createTime, creator, updateTime, updator ,nm
+		FROM(
+		<foreach collection="list" item="item" index="index" separator=" UNION ALL"  >
+		SELECT 
+			 #{item.id,jdbcType=INTEGER} id,#{item.tableid,jdbcType=INTEGER} tableid,#{item.columnname,jdbcType=VARCHAR} columnname,
+			#{item.columnename,jdbcType=VARCHAR} columnename,#{item.isNull,jdbcType=INTEGER} isNull ,
+			#{item.isEqual,jdbcType=INTEGER} isEqual , #{item.isSystem,jdbcType=INTEGER} isSystem ,
+			#{item.dataType,jdbcType=VARCHAR} dataType,#{item.matchInfo,jdbcType=VARCHAR} matchInfo,
+			#{item.alertInfo,jdbcType=VARCHAR} alertInfo, #{item.menuType,jdbcType=VARCHAR} menuType,
+			#{item.delFlag,jdbcType=INTEGER} delFlag,#{item.createTime,jdbcType=TIMESTAMP } createTime,
+			#{item.creator,jdbcType=VARCHAR} creator,#{item.updateTime,jdbcType=TIMESTAMP} updateTime,
+			#{item.updator,jdbcType=VARCHAR} updator,#{item.nm,jdbcType=VARCHAR} nm
+				FROM DUAL
+		</foreach>
+		) A
+	</insert>
+	
+	<!-- *  3.1.2 查询单条数据findInfoForSTGetSingleData -->
+	 <select id="findBaseInfoTest" resultType="java.util.HashMap">
+		 select *  from S_BASETABLE_CONFIG   where id=1
+	 </select>
+	
+</mapper>
+

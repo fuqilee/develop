@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<!--基本表信息的增删改查  -->
+<mapper namespace="com.orgweb.dao.ShareDao">
+		<!-- 公共查询 where条件 !key.startsWith("OR") -->
+		<sql id="sqlWhereOR">
+		  	<trim prefix=" " prefixOverrides="and |or">
+			  	 <if test='ormap!=null'>
+			  	 	<foreach collection="ormap" item="value" index="key" separator=" "  >
+					 	<choose>
+					 		<when test='key.contains("orderby")'>
+				 			</when>
+				 			<when test='value!=null and !"".equals(value.toString()) and key.endsWith("MaxNum")'>
+							     <![CDATA[ or  ${key.substring(2,key.indexOf("MaxNum"))}<=#{value}  ]]>
+				 			</when>
+				 			<when test='value!=null and !"".equals(value.toString())  and key.endsWith("MinNum")'>
+				 				<![CDATA[ or ${key.substring(2,key.indexOf("MinNum"))}>=#{value} ]]>
+				 			</when>
+				 			<when test='value!=null and !"".equals(value.toString()) and key.endsWith("NoEqual") '>
+				 				<![CDATA[ or ${key.substring(2,key.indexOf("NoEqual"))}!=#{value} ]]>
+				 			</when>
+				 			<when test='value!=null and !"".equals(value.toString()) and key.endsWith("Like") '>
+				 				<![CDATA[ or ${key.substring(2,key.indexOf("Like"))} like '%${value}%' ]]>
+				 			</when>
+				 			<when test='value!=null and !"".equals(value.toString()) and key.endsWith("LikeRight") '>
+				 					<![CDATA[ or ${key.substring(2,key.indexOf("LikeRight"))} like '${value}%' ]]>
+				 			</when>
+				 			<when test='value!=null and !"".equals(value.toString()) and key.endsWith("LikeLeft") '>
+				 					<![CDATA[ or ${key.substring(2,key.indexOf("LikeLeft"))} like '%${value}' ]]>
+				 			</when>
+				 			<when test='value!=null and !"".equals(value.toString()) and key.endsWith("In") '>
+				 					or ${key.substring(2,key.indexOf("In"))} in (
+						 				<foreach collection="value" item="item" separator=",">
+						 					#{item}
+						 				</foreach>
+					 				 )
+				 			</when>
+				 			<when test='value!=null and !"".equals(value.toString())  '>
+				 					<![CDATA[ or  ${key}=#{value} ]]>
+				 			</when>
+				 			<otherwise>
+				 			</otherwise>
+					 	</choose>
+				    </foreach>
+			  	 </if>
+			</trim>
+		</sql>
+		<!-- 公共查询 where条件 !key.startsWith("OR") -->
+		<sql id="sqlWhereAND">
+		  	<trim prefix=" " prefixOverrides="and |or">
+		  	    <if test='andmap!=null'>
+					<foreach collection="andmap" item="value" index="key" separator=" "  >
+					 	<choose>
+					 		<when test='key.contains("orderby")'>
+				 			</when>
+				 			<when test='value!=null and !"".equals(value.toString()) and key.endsWith("MaxNum")'>
+							     	<![CDATA[ and  ${key.substring(0,key.indexOf("MaxNum"))}<=#{value}  ]]>
+				 			</when>
+				 			<when test='value!=null and !"".equals(value.toString())  and key.endsWith("MinNum")'>
+							     	<![CDATA[ and  ${key.substring(0,key.indexOf("MinNum"))}>=#{value} ]]>
+				 			</when>
+				 			<when test='value!=null and !"".equals(value.toString()) and key.endsWith("NoEqual") '>
+							     	<![CDATA[ and  ${key.substring(0,key.indexOf("NoEqual"))}!=#{value} ]]>
+				 			</when>
+				 			<when test='value!=null and !"".equals(value.toString()) and key.endsWith("Like") '>
+							     	<![CDATA[ and ${key.substring(0,key.indexOf("Like"))} like '%${value}%' ]]>
+				 			</when>
+				 			<when test='value!=null and !"".equals(value.toString()) and key.endsWith("LikeRight") '>
+							     	<![CDATA[ and ${key.substring(0,key.indexOf("LikeRight"))} like '${value}%' ]]>
+				 			</when>
+				 			<when test='value!=null and !"".equals(value.toString()) and key.endsWith("LikeLeft") '>
+							     	<![CDATA[ and ${key.substring(0,key.indexOf("LikeLeft"))} like '%${value}' ]]>
+				 			</when>
+				 			<when test='value!=null and !"".equals(value.toString()) and key.endsWith("In") '>
+							     	and ${key.substring(2,key.indexOf("In"))} in (
+						 				<foreach collection="value" item="item" separator=",">
+						 					#{item}
+						 				</foreach>
+					 				 )
+				 			</when>
+				 			<when test='value!=null and !"".equals(value.toString())  '>
+							     	<![CDATA[ and  ${key}=#{value} ]]>
+				 			</when>
+				 			<otherwise>
+				 			</otherwise>
+					 	</choose>
+				    </foreach>	 
+				</if>
+		    </trim>
+	</sql>
+	<!-- 公共查询 where条件 -->
+	<sql id="sqlWhere">
+		 <where>
+		 	<include refid="sqlWhereAND"/>
+		 	<choose>
+		 		<when test='andmap!=null and (andmap.orderby!=null and andmap.orderby!="") and andmap.size > 1 and ormap!=null and ormap.size>1'>
+		 			and( <include refid="sqlWhereOR"/> ) 
+	 			</when>
+		 		<when test='andmap!=null and (andmap.orderby=="" or andmap.orderby==null) and andmap.size > 0 and ormap!=null and ormap.size>1'>
+		 			and ( <include refid="sqlWhereOR"/> ) 
+	 			</when>
+		 		<when test='andmap!=null and (andmap.orderby!=null and andmap.orderby!="") and andmap.size > 1 and (ormap!=null and ormap.size==1)'>
+		 			and <include refid="sqlWhereOR"/> 
+	 			</when>
+		 		<when test='andmap!=null and (andmap.orderby==null or andmap.orderby=="") and andmap.size > 0 and (ormap!=null and ormap.size==1)'>
+		 			and <include refid="sqlWhereOR"/> 
+	 			</when>
+		 		<when test='andmap!=null and andmap.size ==1 and andmap.orderby!=null and andmap.orderby!=""'>
+		 			<include refid="sqlWhereOR"/> 
+	 			</when>
+		 		<when test='andmap==null or and andmap.size ==0'>
+		 			<include refid="sqlWhereOR"/> 
+	 			</when>
+	 			<otherwise>
+	 			</otherwise>
+		 	</choose>
+		 </where>
+	</sql>
+	 <!-- *  2 删除deleteInfoForST -->
+	 <delete id="deleteInfoForST" timeout="30">
+		 delete from ${tablename}  
+		 <include refid="sqlWhere"/>
+	 </delete>
+	 <!-- *  3.1.1 查询一个list集合findInfoForSTGetList -->
+	 <select id="findInfoForSTGetList" resultType="java.util.HashMap" >
+		 select *  from ${tablename} 
+		 <include refid="sqlWhere"/>
+		 <if test='andmap.orderby!=null and andmap.orderby!=""'>
+		 	 order by ${andmap.orderby} 
+		 </if>
+	 </select>
+	 <!-- *  3.1.2 查询单条数据findInfoForSTGetSingleData -->
+	 <select id="findInfoForSTGetSingleData" resultType="java.util.HashMap">
+		 select *  from ${tablename} 
+		 <include refid="sqlWhere"/>
+		<!--  LIMIT 0,1 -->
+	 </select>
+	 <!-- *  3.2.1 分页查询findInfoForSTByPage -->
+	 <select id="findInfoForSTByPage" resultType="java.util.HashMap">
+	 	select * from (
+		    select a.*,rownum rn from( 
+				 select *  from ${tablename} 
+				 <include refid="sqlWhere"/>
+				 <if test='andmap.orderby!=null and andmap.orderby!=""'>
+				 	 order by ${andmap.orderby} 
+				 </if>
+			) a where rownum &lt;= #{pageSize}
+		) where rn >#{pageNum}
+		 <!-- LIMIT #{pageNum},#{pageSize} -->
+	 </select>
+	 <!-- *  3.2.2 分页查询数据数量findInfoForSTByPageCount -->
+	 <select id="findInfoForSTByPageCount" resultType="java.lang.Integer">
+		 select count(1) from ${tablename} 
+		<include refid="sqlWhere"/>
+	</select>
+	 <!-- *  4 修改modifyInfoForST -->
+	 <update id="modifyInfoForST" timeout="30">
+		update ${tablename}
+	    <set>
+		    <foreach collection="infomap.keys" item="key" index="index" separator=","  >
+		    	<if test='key!="id"'>
+		    		${key}=#{map[${key}]}
+		    	</if>
+			</foreach>
+	    </set>
+	    <include refid="sqlWhere"/>
+	</update>
+	
+	
+	
+	<!-- 判断是否含有外层where -->
+	<sql id="sqlForISContinueOutWhere">
+	 	<choose>
+	 		<when test='andmap!=null and andmap.orderby!="" and andmap.orderby!=null and andmap.size >1'>
+	 				  ${sql} and
+				      <include refid="sqlWhere"/>
+				      order by ${andmap.orderby} 
+ 			</when>
+ 			<when test='andmap!=null and (andmap.orderby=="" or andmap.orderby==null) and andmap.size >0'>
+	 				 ${sql} and
+					<include refid="sqlWhere"/>
+ 			</when>
+	 		<when test='ormap!=null and ormap.size >1'>
+	 				  ${sql} and
+				      <include refid="sqlWhere"/>
+ 			</when>
+ 			<otherwise>
+ 				 ${sql} 
+ 				 <include refid="sqlWhere"/>
+ 				 <if test='andmap!=null and andmap.orderby!=null and andmap.orderby!=""'>
+				 	 order by ${andmap.orderby} 
+				 </if>
+ 			</otherwise>
+	 	</choose>
+	</sql>
+	<!-- *  2 删除deleteInfoForUD -->
+	<delete id="deleteInfoForUDSQL" timeout="30">
+		  ${sql}
+		  <include refid="sqlWhere"/>
+	</delete>
+	<!-- *  3.1.1 查询一个list集合findInfoForUDGetList-->
+	<select id="findInfoForUDGetListSQL"  resultType="java.util.HashMap">
+		${sql}
+		<include refid="sqlWhere"/>
+		<if test='map!=null and map.orderby!=null and map.orderby!=""'>
+		 	 order by ${map.orderby} 
+		 </if>
+	</select>
+	<!-- *  3.1.2 查询单条数据findInfoForUDGetSingleData-->
+	<select id="findInfoForUDGetSingleDataSQL" resultType="java.util.HashMap">
+		 ${sql}
+		 <include refid="sqlWhere"/>
+		<!--  LIMIT 0,1 -->
+	</select>
+	<!-- *  3.2.1 分页查询findInfoForUDByPage-->
+	<select id="findInfoForUDByPageSQL" resultType="java.util.HashMap">
+		select * from (
+		    select a.*,rownum rn from( 
+				 ${sql}
+				<include refid="sqlWhere"/>
+				<if test='map.orderby!=null and map.orderby!=""'>
+				 	 order by ${map.orderby} 
+				 </if>
+			) a where rownum &lt;= #{pageSize}
+		) where rn >#{pageNum}
+		<!--  LIMIT #{pageNum},#{pageSize} -->
+	</select>
+	<!-- *  3.2.2 分页查询数据数量findInfoForUDByPageCount-->
+	<select id="findInfoForUDByPageCountSQL" resultType="java.lang.Integer">
+		 ${sql}
+		<include refid="sqlWhere"/>
+	</select>
+	<!-- *  3.3.1 分页查询findInfoForUDByPageOutWhere 解决内部有paramconfigwhere ，外部也有where的情况-->
+	<select id="findInfoForUDByPageOutWhereSQL" resultType="java.util.HashMap">
+		select * from (
+		    select a.*,rownum rn from( 
+				<include refid="sqlForISContinueOutWhere"/>
+			) a where rownum &lt;= #{pageSize}
+		) where rn >#{pageNum}
+		<!--  LIMIT #{pageNum},#{pageSize} -->
+	</select>
+	<!-- *  3.2.2 分页查询数据数量findInfoForUDByPageCountOutWhere 复杂情况的查询-->
+	<select id="findInfoForUDByPageCountOutWhereSQL" resultType="java.lang.Integer">
+		 <include refid="sqlForISContinueOutWhere"/>
+	</select>
+</mapper>

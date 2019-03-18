@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Modal Window - jQuery EasyUI Demo</title>
+    <link rel="stylesheet" type="text/css" href="themes/gray/easyui.css">
+    <link rel="stylesheet" type="text/css" href="themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="demo/demo.css">
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="jquery.easyui.min.js"></script>
+    <style>
+        .window{
+            border:none;
+            background-color: transparent;
+        }
+    </style>
+</head>
+<body>
+
+
+<div id="win" style="left:300px;top:20px;width:200px;height:300px;" >
+    <img src="http://28.12.3.39/toponew/demos/images/logo-retina.png">
+</div>
+<div id="win2"></div>
+
+</body>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#win').window({
+            title:null,
+
+            modal:false
+        });
+        $('#win2').window({
+            title:'数据中心2',
+            width:300,
+            height:200,
+            modal:false
+        });
+    });
+
+
+</script>
+</html>

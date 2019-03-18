@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.orgweb.dao.ManagerSqlInfoDao">
+	<!-- 公共查询 where条件 -->
+	<sql id="sqlWhere">
+		 <where>
+		 	<foreach collection="map" item="value" index="key" separator=" and "  >
+			 	<choose>
+			 		<when test='key.contains("orderby")'>
+		 			</when>
+		 			<when test='value!=null and !"".equals(value.toString()) and key.endsWith("MaxNum")'>
+		 				<![CDATA[  ${key.substring(0,key.indexOf("MaxNum"))}<=#{value}  ]]>
+		 			</when>
+		 			<when test='value!=null and !"".equals(value.toString())  and key.endsWith("MinNum")'>
+		 				<![CDATA[  ${key.substring(0,key.indexOf("MinNum"))}>=#{value} ]]>
+		 			</when>
+		 			<when test='value!=null and !"".equals(value.toString()) and key.endsWith("NoEqual") '>
+		 				 ${key.substring(0,key.indexOf("NoEqual"))}!=#{value}
+		 			</when>
+		 			<when test='value!=null and !"".equals(value.toString()) and key.endsWith("Like") '>
+		 				 ${key.substring(0,key.indexOf("Like"))} like '%${value}%'
+		 			</when>
+		 			<when test='value!=null and !"".equals(value.toString()) and key.endsWith("LikeRight") '>
+		 				 ${key.substring(0,key.indexOf("LikeRight"))} like '${value}%'
+		 			</when>
+		 			<when test='value!=null and !"".equals(value.toString()) and key.endsWith("LikeLeft") '>
+		 				 ${key.substring(0,key.indexOf("LikeLeft"))} like '%${value}'
+		 			</when>
+		 			<when test='value!=null and !"".equals(value.toString()) and key.endsWith("In") '>
+		 				${key.substring(0,key.indexOf("In"))} in (
+			 				<foreach collection="value" item="item" separator=",">
+			 					#{item}
+			 				</foreach>
+		 				 )
+		 			</when>
+		 			<when test='value!=null and !"".equals(value.toString())  '>
+		 				 ${key}=#{value}
+		 			</when>
+		 			<otherwise>
+		 			</otherwise>
+			 	</choose>
+		    </foreach>
+		 </where>
+	</sql>
+	<sql id="sqlWhereOutWhere">
+			and 
+		 	<foreach collection="map" item="value" index="key" separator=" and "  >
+			 	<choose>
+			 		<when test='key.contains("orderby")'>
+		 			</when>
+		 			<when test='value!=null and !"".equals(value.toString()) and key.endsWith("MaxNum")'>
+		 				<![CDATA[  ${key.substring(0,key.indexOf("MaxNum"))}<=#{value}  ]]>
+		 			</when>
+		 			<when test='value!=null and !"".equals(value.toString())  and key.endsWith("MinNum")'>
+		 				<![CDATA[  ${key.substring(0,key.indexOf("MinNum"))}>=#{value} ]]>
+		 			</when>
+		 			<when test='value!=null and !"".equals(value.toString()) and key.endsWith("NoEqual") '>
+		 				 ${key.substring(0,key.indexOf("NoEqual"))}!=#{value}
+		 			</when>
+		 			<when test='value!=null and !"".equals(value.toString()) and key.endsWith("Like") '>
+		 				 ${key.substring(0,key.indexOf("Like"))} like '%${value}%'
+		 			</when>
+		 			<when test='value!=null and !"".equals(value.toString()) and key.endsWith("LikeRight") '>
+		 				 ${key.substring(0,key.indexOf("LikeRight"))} like '${value}%'
+		 			</when>
+		 			<when test='value!=null and !"".equals(value.toString()) and key.endsWith("LikeLeft") '>
+		 				 ${key.substring(0,key.indexOf("LikeLeft"))} like '%${value}'
+		 			</when>
+		 			<when test='value!=null and !"".equals(value.toString()) and key.endsWith("In") '>
+		 				${key.substring(0,key.indexOf("In"))} in (
+			 				<foreach collection="value" item="item" separator=",">
+			 					#{item}
+			 				</foreach>
+		 				 )
+		 			</when>
+		 			<when test='value!=null and !"".equals(value.toString())  '>
+		 				 ${key}=#{value}
+		 			</when>
+		 			<otherwise>
+		 			</otherwise>
+			 	</choose>
+		    </foreach>
+	</sql>
+	<!-- 判断是否含有外层where -->
+	<sql id="sqlForISContinueOutWhere">
+	 	<choose>
+	 		<when test='map!=null and map.orderby!="" and map.orderby!=null and map.size >1'>
+	 				  ${sql}
+				      <include refid="sqlWhereOutWhere"/>
+				      order by ${map.orderby} 
+ 			</when>
+ 			<when test='map!=null and (map.orderby=="" or map.orderby==null) and map.size >0'>
+	 				 ${sql}
+					<include refid="sqlWhereOutWhere"/>
+ 			</when>
+ 			<otherwise>
+ 				 ${sql} 
+ 				 <include refid="sqlWhere"/>
+ 				 <if test='map!=null and map.orderby!=null and map.orderby!=""'>
+				 	 order by ${map.orderby} 
+				 </if>
+ 			</otherwise>
+	 	</choose>
+	</sql>
+	<!-- * 	1  新增 addInfoForUD -->
+	<insert id="addInfoForUD"  timeout="30">
+		${sql}  (
+			<foreach collection="map" item="value" index="key" separator=","  >
+				<if test='value!=null and value!=""'>
+					${key}
+				</if>
+			</foreach>
+		) VALUES (
+			<foreach collection="map.values" item="value" index="index" separator=","  >
+				<if test='value!=null and value!=""'>
+			     	#{value}
+				</if>
+			</foreach>
+		)
+	</insert>
+	<!-- *  2 删除deleteInfoForUD -->
+	<delete id="deleteInfoForUD" timeout="30">
+		  ${sql}
+		  <include refid="sqlWhere"/>
+	</delete>
+	<!-- *  3.1.1 查询一个list集合findInfoForUDGetList-->
+	<select id="findInfoForUDGetList"  resultType="java.util.HashMap">
+		${sql}
+		<include refid="sqlWhere"/>
+		<if test='map!=null and map.orderby!=null and map.orderby!=""'>
+		 	 order by ${map.orderby} 
+		 </if>
+	</select>
+	<!-- *  3.1.2 查询单条数据findInfoForUDGetSingleData-->
+	<select id="findInfoForUDGetSingleData" resultType="java.util.HashMap">
+		 ${sql}
+		 <include refid="sqlWhere"/>
+		 LIMIT 0,1 
+	</select>
+	<!-- *  3.2.1 分页查询findInfoForUDByPage-->
+	<select id="findInfoForUDByPage" resultType="java.util.HashMap">
+		 ${sql}
+		<include refid="sqlWhere"/>
+		<if test='map.orderby!=null and map.orderby!=""'>
+		 	 order by ${map.orderby} 
+		 </if>
+		 LIMIT #{pageNum},#{pageSize} 
+	</select>
+	<!-- *  3.2.2 分页查询数据数量findInfoForUDByPageCount-->
+	<select id="findInfoForUDByPageCount" resultType="java.lang.Integer">
+		 ${sql}
+		<include refid="sqlWhere"/>
+	</select>
+	<!-- *  3.3.1 分页查询findInfoForUDByPageOutWhere 解决内部有paramconfigwhere ，外部也有where的情况-->
+	<select id="findInfoForUDByPageOutWhere" resultType="java.util.HashMap">
+		<include refid="sqlForISContinueOutWhere"/>
+				 LIMIT #{pageNum},#{pageSize} 
+	</select>
+	<!-- *  3.2.2 分页查询数据数量findInfoForUDByPageCountOutWhere 复杂情况的查询-->
+	<select id="findInfoForUDByPageCountOutWhere" resultType="java.lang.Integer">
+		 <include refid="sqlForISContinueOutWhere"/>
+	</select>
+	
+	<!-- *  4 修改modifyInfoForUD -->
+	<update id="modifyInfoForUD" timeout="30">
+		${sql}
+	    <set>
+		    <foreach collection="upadteMap" item="value" index="key" separator=","  >
+		    	${key}=#{value}
+			</foreach>
+	    </set>
+	    <include refid="sqlWhere"/>
+	</update>
+	<!-- *  4 修改modifyInfoForUD -->
+	<update id="modifyInfoForMoreUD" timeout="30">
+		${sql}
+	</update>
+</mapper>

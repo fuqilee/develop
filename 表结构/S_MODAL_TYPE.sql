@@ -1,0 +1,74 @@
+/*
+Navicat Oracle Data Transfer
+Oracle Client Version : 11.2.0.3.0
+
+Source Server         : oracle_13
+Source Server Version : 110200
+Source Host           : 192.168.0.6:1521
+Source Schema         : FWTX_ZZZB
+
+Target Server Type    : ORACLE
+Target Server Version : 110200
+File Encoding         : 65001
+
+Date: 2018-11-15 09:17:53
+*/
+
+
+-- ----------------------------
+-- Table structure for S_MODAL_TYPE
+-- ----------------------------
+DROP TABLE "FWTX_ZZZB"."S_MODAL_TYPE";
+CREATE TABLE "FWTX_ZZZB"."S_MODAL_TYPE" (
+"NM" VARCHAR2(32 BYTE) NOT NULL ,
+"MKLX" VARCHAR2(50 BYTE) NULL ,
+"MKMC" VARCHAR2(100 BYTE) NULL ,
+"ISLEAF" VARCHAR2(5 BYTE) NULL ,
+"XH" NUMBER NULL ,
+"PID" NUMBER NULL ,
+"DWMC" VARCHAR2(50 BYTE) NULL ,
+"XWM" VARCHAR2(50 BYTE) NULL ,
+"USERID" VARCHAR2(50 BYTE) NULL ,
+"BDNM" VARCHAR2(50 BYTE) NULL ,
+"YWMC" VARCHAR2(50 BYTE) NULL ,
+"TBNAME" VARCHAR2(50 BYTE) NULL ,
+"CONTENT" VARCHAR2(3000 BYTE) NULL ,
+"BELONGMODAL" VARCHAR2(50 BYTE) NULL ,
+"DISJS" VARCHAR2(500 BYTE) NULL ,
+"SAVEJB" VARCHAR2(10 BYTE) NULL 
+)
+LOGGING
+NOCOMPRESS
+NOCACHE
+
+;
+COMMENT ON COLUMN "FWTX_ZZZB"."S_MODAL_TYPE"."NM" IS '内码';
+COMMENT ON COLUMN "FWTX_ZZZB"."S_MODAL_TYPE"."MKLX" IS '模块类型';
+COMMENT ON COLUMN "FWTX_ZZZB"."S_MODAL_TYPE"."MKMC" IS '模块名称';
+COMMENT ON COLUMN "FWTX_ZZZB"."S_MODAL_TYPE"."ISLEAF" IS '是否为叶子节点 1是；0否';
+COMMENT ON COLUMN "FWTX_ZZZB"."S_MODAL_TYPE"."XH" IS '序号';
+COMMENT ON COLUMN "FWTX_ZZZB"."S_MODAL_TYPE"."PID" IS '父节点';
+COMMENT ON COLUMN "FWTX_ZZZB"."S_MODAL_TYPE"."DWMC" IS '单位名称';
+COMMENT ON COLUMN "FWTX_ZZZB"."S_MODAL_TYPE"."XWM" IS '席位名称';
+COMMENT ON COLUMN "FWTX_ZZZB"."S_MODAL_TYPE"."USERID" IS '登录ID';
+COMMENT ON COLUMN "FWTX_ZZZB"."S_MODAL_TYPE"."BDNM" IS '部队内码';
+COMMENT ON COLUMN "FWTX_ZZZB"."S_MODAL_TYPE"."YWMC" IS '英文名称';
+COMMENT ON COLUMN "FWTX_ZZZB"."S_MODAL_TYPE"."TBNAME" IS '对应表名';
+COMMENT ON COLUMN "FWTX_ZZZB"."S_MODAL_TYPE"."CONTENT" IS 'html内容';
+COMMENT ON COLUMN "FWTX_ZZZB"."S_MODAL_TYPE"."BELONGMODAL" IS '所属模板类型';
+COMMENT ON COLUMN "FWTX_ZZZB"."S_MODAL_TYPE"."DISJS" IS 'JS展示';
+COMMENT ON COLUMN "FWTX_ZZZB"."S_MODAL_TYPE"."SAVEJB" IS '保存级别 1 主表 ；2-子单信息 ；3-子多信息';
+
+-- ----------------------------
+-- Indexes structure for table S_MODAL_TYPE
+-- ----------------------------
+
+-- ----------------------------
+-- Checks structure for table S_MODAL_TYPE
+-- ----------------------------
+ALTER TABLE "FWTX_ZZZB"."S_MODAL_TYPE" ADD CHECK ("NM" IS NOT NULL);
+
+-- ----------------------------
+-- Primary Key structure for table S_MODAL_TYPE
+-- ----------------------------
+ALTER TABLE "FWTX_ZZZB"."S_MODAL_TYPE" ADD PRIMARY KEY ("NM");

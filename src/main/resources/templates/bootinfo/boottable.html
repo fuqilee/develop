@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/common/bootstrap-3.3.7/css/bootstrap.css" />
+    <link rel="stylesheet" href="/common/fontawesome/font-awesome.css" />
+    <link rel="stylesheet" href="/common/bootstrap-table/src/bootstrap-table.css" type="text/css"  />
+    <link rel="stylesheet" href="/common/bootstrap3-editable/css/bootstrap-editable.css" type="text/css"  />
+    <script type="text/javascript" src="/common/js/jquery/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/common/artDialog4.1.6/jquery.artDialog.js?skin=idialog"></script>
+    <script type="text/javascript" src="/common/artDialog4.1.6/plugins/iframeTools.js"></script>
+    <script type="text/javascript" src="/common/js/jquery/jquery.extends.js"></script>
+    <script type="text/javascript" src="/common/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/common/bootstrap3-editable/js/bootstrap-editable.js"></script>
+    <script type="text/javascript" src="/common/bootstrap-table/src/bootstrap-table.js"></script>
+    <script type="text/javascript" src="/common/bootstrap-table/src/locale/bootstrap-table-zh-CN.js"></script>
+    <script type="text/javascript" src="/common/js/share/share.js"></script>
+    <script type="text/javascript" src="/common/js/share/bootstrap-table-default.js"></script>
+    <script type="text/javascript" src="/common/bootstrap-table/src/extensions/filter-control/bootstrap-table-filter-control.js"></script>
+    <script type="text/javascript" src="/common/bootstrap-table/src/extensions/filter/bootstrap-table-filter.js"></script>
+    <script type="text/javascript" src="/common/bootstrap-table/src/extensions/editable/bootstrap-table-editable.js"></script>
+    <script type="text/javascript" src="/common/auto/j.autocomplete.js"></script>
+</head>
+<body>
+<!-- 头部 -->
+<div class="header">
+
+</div>
+<div id="container" class="container-fluid">
+    <div class="w1200" id="pagePad">
+        <div class="h1_title">
+            <h1 class="fl">查询信息</h1>
+        </div>
+        <!-- 主题信息 -->
+        <div class="fs_box">
+            <div class="form-inline" id="tablesearcformid" style="margin-top:15px;display:none">
+                <div class="form-group">
+                    <label class="control-label">表名</label>
+                    <input class="form-control" type="text" id="tablenameid"  value="S_BASETABLE_CONFIG"/>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">表ID</label>
+                    <input class="form-control" type="text" id="tableid"  value="51"/>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">主键</label>
+                    <input class="form-control" type="text" id="keyid" name="keyid" value="ID"/>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">全部展现</label>
+                    <select class="form-control"  id="isallsearchid">
+                        <option value="0">否</option>
+                        <option value="1">是</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">全部模糊</label>
+                    <select class="form-control"  id="isAllLike">
+                        <option value="0">否</option>
+                        <option value="1">是</option>
+                    </select>
+                </div>
+                <button class="btn btn-default">
+                    <i class="icon-share" id="tablesearchID">查询</i>
+                </button>
+            </div>
+            <div class="form-inline" id="searcformid" style="margin-top:15px;">
+                <div class="form-group">
+                    <label class="control-label">配置表ID</label>
+                    <input class="form-control" type="text" id="" name="TABLEID">
+                </div>
+                <div class="form-group">
+                    <label class="control-label">配置字段中文名</label>
+                    <input class="form-control" type="text" id="" name="COLUMNNAME">
+                </div>
+                <div class="form-group">
+                    <label class="control-label">配置字段英文名</label>
+                    <input class="form-control" type="text" id="" name="COLUMNENAME">
+                </div>
+                <div class="form-group">
+                    <label class="control-label">字段类型</label>
+                    <input class="form-control" type="text" id="" name="DATATYPE">
+                </div>
+                <div class="form-group">
+                    <label class="control-label">父级ID</label>
+                    <input class="form-control" type="text" id="" name="PID">
+                </div>
+                <button class="btn btn-default">
+                    <i class="icon-share" id="searchID">查询</i>
+                </button>
+            </div>
+            <div id="toolbar">
+                <button class="btn btn-default">
+                    <i class="glyphicon glyphicon-plus" id="addARowID"></i>
+                </button>
+                <button class="btn btn-default">
+                    <i class="glyphicon glyphicon-heart" id="heartBtn"></i>
+                </button>
+                <button class="btn btn-default" id="bathDel">
+                    <i class="glyphicon glyphicon-trash" ></i>
+                </button>
+                <!-- 批量保存 -->
+                <button class="btn btn-default">
+                    <i class="icon-share" id="bathSaveid">修改保存</i>
+                </button>
+                <button class="btn btn-default">
+                    <i class="icon-share" id="addSaveID">新增保存</i>
+                </button>
+            </div>
+            <table id="boot_table"
+                   data-toolbar="#toolbar"
+                   data-striped="true"
+                   data-toggle="table"
+                   data-search="false"
+                   data-show-refresh="true"
+                   data-show-toggle="true"
+                   data-show-columns="true"
+                   data-select-item-name="item"
+                   data-filter-control="false"
+                   data-filter-Show-Clear="false"
+                   data-method="post"
+                   data-unique-id="ID"
+                   data-sort-name="ID"
+                   data-sort-order="desc"
+                   data-pagination = "true"
+                   data-side-pagination = "server"
+                   data-page-size="10"
+                   data-page-number="1"
+                   data-click-to-select="true"
+                   data-query-params="queryParam"
+                   data-content-type="application/x-www-form-urlencoded"
+                   data-onEditableSave="saveInfo"
+            >
+            </table>
+        </div>
+    </div>
+</div>
+<!--展现sql列表内容 -->
+<div class="modal fade" id="table_columns_modal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" style="max-width:1500px;min-width: 880px;">
+        <div class="modal-content">
+            <div class="modal-header"  >
+                <p>字段维护</p>
+                <span class="CloseBtn" data-dismiss="modal" aria-label="Close"></span>
+            </div>
+            <!-- 主体结构 -->
+            <div class="modal-body" style="max-height:580px;overflow-y:auto;">
+                <table id="columnTableID"
+                       data-toggle="table"
+                       data-search="false"
+                       data-show-refresh="false"
+                       data-show-toggle="true"
+                       data-show-columns="true"
+                       data-select-item-name="item"
+                       data-filter-control="false"
+                       data-filter-Show-Clear="false"
+                       data-pagination = "false"
+                       data-side-pagination = "server"
+                       data-page-size="10"
+                       data-page-number="1"
+                       data-click-to-select="true"
+                       data-query-params="columnparam"
+                       data-content-type="application/x-www-form-urlencoded"
+                       data-method="post"
+                >
+                    <!-- <thead>
+                       <tr>
+                           <th data-field="" data-checkbox="true"></th>
+                           <th data-field="RN" data-visible="true" data-formatter="getXhByRow">序号</th>
+                           <th data-field="JK_FILENAME" data-visible="true">文件名称</th>
+                           <th data-field="OPERATER" data-formatter="operationFile">操作</th>
+                       </tr>
+                       </thead>  -->
+                </table>
+            </div>
+            <!-- 按钮 -->
+            <div class="modal-footer">
+                <button type="button"  class="btn btn-success newButton" onclick="saveColumns()">保存</button>
+                <button type="button" data-dismiss="modal"  class="btn btn-success newButton" id="backid">返回</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    var basePath='';
+    $(function () {
+        $('.header').load('/head/header');
+        initsearch();
+    });
+    function initsearch(){
+        var cols=initInfo();
+        /* $("#boot_table").bootstrapTable('refreshOptions',{
+             columns:cols
+        }); */
+
+        /* $("#boot_table").bootstrapTable({
+             columns:cols
+        });   */
+        $("#boot_table").on('uncheck.bs.table check.bs.table check-all.bs.table uncheck-all.bs.table',function(e,row){
+            //examine(e.type,datas);
+            console.log();
+        });
+        $('#bathSaveid').unbind('click').bind('click',function(){
+            modifyInfo();
+        });
+        $('#addSaveID').unbind('click').bind('click',function(){
+            addSaveInfo();
+        });
+        $('#bathDel').unbind('click').bind('click',function(){
+            delBath();
+        });
+        var datas={};
+        /* $.each(cols,function(index,item){
+            datas[item.field]='';
+        }); */
+
+        $('#addARowID').unbind('click').bind('click',function(){
+            var selects=$("#boot_table").bootstrapTable('getSelections');
+            if(selects.length>0){
+                datas=selects[0];
+            }else{
+                $.each(cols,function(index,item){
+                    datas[item.field]='';
+                });
+            }
+            //datas[$('#keyid').val()]=getRandomChars();
+            $("#boot_table").bootstrapTable('insertRow',{
+                index:$("#boot_table").bootstrapTable('getOptions').totalRows,
+                row:datas
+            });
+        });
+
+        $('#searchID').unbind('click').bind('click',function(){
+            $("#boot_table").bootstrapTable('refreshOptions',{
+                url:basePath+"/share/findListPage",
+                columns:cols
+            });
+        });
+    }
+    //查询参数设置
+    function queryParam(param){
+        var paramConfig={};//查询没有上报的情况
+        paramConfig['currPage']=param.pageNumber;
+        paramConfig['pageSize']=param.pageSize ;
+        //paramConfig['TABLEID']=param.searchText;
+        //可以增加排序 map.ORDERBY cols asc desc
+        //paramConfig['TABLEID']=param.searchText;
+        var inputs=$('#searcformid').find('input');
+        $.each(inputs,function(index,item){
+            var value=$(item).val();
+            var name=$(item).prop('name');
+            if(value){
+                paramConfig[name]=value;
+            }
+        });
+        param['condition']=JSON.stringify(paramConfig);
+        param['tablename']=$('#tablenameid').val();
+        //param['methodName']='findBaseInfoOperateList';
+        //param["URL"]=basePath+'/share/findListPageSql';
+        return param;
+    }
+    //初始化查询列和查询表名
+    function initInfo(){
+        var columns=new Array();
+        var maindata=ajaxFindListSql('',"findColumnsByTableName",{'NAME':$('#tablenameid').val()});
+        var inptuclone=$('#tablenameid').parent().clone(true);
+        $('#searcformid').find('input').parent().remove();
+        columns.push({field:'RN',
+            title:'',
+            align:'center',
+            checkbox:"true",
+            formatter:"checkboxProcess"
+        });
+        $.each(maindata.result,function(index,item){
+            //中文名
+            var ename=item.COLUMNENAME.toUpperCase();
+            //英文名
+            var cname=item.COLUMNNAME;
+            //是否为查询条件
+            var isFind=item.ISFIND;
+            //查询列表是否显示
+            var findDisplay=item.FINDDISPLAY;
+            //修改是否可编辑
+            var modifyDisplay=item.MODIFYDISPLAY;
+            var ISKEY=item.ISKEY;
+            if(ISKEY=='1'){
+                $('#keyid').val(ename);
+            }
+            var cols={};
+            if(findDisplay=='1'){
+                //如果允许编辑
+                if(modifyDisplay=='1'){
+                    cols={field:ename,
+                        title:cname,
+                        align:'center',
+                        editable:{
+                            type:'textarea',
+                            title:cname
+                        }
+                    };
+                }else{
+                    cols={field:ename,
+                        title:cname,
+                        align:'center'
+                    };
+                }
+                columns.push(cols);
+                if(isFind=="1"){
+                    inptuclone.find('input').prop('name',ename);
+                    inptuclone.find('input').prop('id','');
+                    inptuclone.find('input').val('');
+                    inptuclone.find('label').html(cname);
+
+                    $('#searcformid button').before(inptuclone.prop('outerHTML'));
+                    $('#searcformid').find('input').val('');
+                }
+            }
+        });
+        columns.push({field:'OPERATE',
+            title:'操作',
+            align:'center',
+            formatter:function(value,row,index){
+                return '<button title="查看" class="btn"   onclick="toModifyColumns(\''+row.ID+'\',\''+row.TABLEENAME+'\')">查看</button><input type="hidden" value="'+row.SQLCONTENT+'">';
+            }
+        });
+        return columns;
+    }
+
+
+    function modifyInfo(){
+        var tablename=$('#tablenameid').val();
+        var _key=$('#keyid').val();
+        if(!tablename || !_key ){
+            $.alert('表名或者主键不能为空！');
+            return ;
+        }
+        var columns=$("#boot_table").bootstrapTable('getOptions')['columns'][0];
+        var datas=$("#boot_table").bootstrapTable('getSelections');
+        var modifyArray=new Array();
+        $.each(datas,function(index,item){
+            var obj={};
+            $.each(columns,function(cindex,col){
+                var key=col['field'];
+                obj[key]=eval('item.'+key);
+            });
+            delete obj.RN;
+            modifyArray.push({'key':_key,'value':obj});
+        });
+        var data={};
+        data['modifyInfo']=JSON.stringify(modifyArray);
+        data['tablename']=tablename;
+        var dataUrl=basePath+'/bootInfo/bathModifyBase';
+        // 调用后台
+        $.ajax({
+            url :dataUrl,//后台处理程序
+            type:"post",  //数据发送方式
+            async:false,   //同步为false,异步为true
+            dataType:"text", //接受数据格式
+            data:data,
+            success: function(result){//执行成功后
+                var da=eval('('+result+')');
+                resultdata=da;
+                if(resultdata.code=='10001'){
+                    $.alert('保存成功');
+                    $('#searchID').click();
+                }else{
+                    $.alert('保存失败');
+                }
+            }
+        });
+    }
+    function addSaveInfo(){
+        var tablename=$('#tablenameid').val();
+        var _key=$('#keyid').val();
+        if(!tablename || !_key ){
+            $.alert('表名或者主键不能为空！');
+            return ;
+        }
+        var datas=$("#boot_table").bootstrapTable('getSelections');
+        $.each(datas,function(index,item){
+            delete item.RN;
+            delete item.OPERATE;
+            //delete item.COLUMNENAME;
+            //delete item.COLUMNNAME;
+            //item.DISCONTENT=JSON.stringify(item.DISCONTENT);
+            //modifyArray.push({'key':_key,'value':item});
+        });
+        var data={};
+        data['addInfo']=JSON.stringify(datas);
+        data['tablename']=tablename;
+        var dataUrl=basePath+'/bootInfo/batchInsertData';
+        // 调用后台
+        $.ajax({
+            url :dataUrl,//后台处理程序
+            type:"post",  //数据发送方式
+            async:false,   //同步为false,异步为true
+            dataType:"text", //接受数据格式
+            data:data,
+            success: function(result){//执行成功后
+                var da=eval('('+result+')');
+                resultdata=da;
+                if(resultdata.code=='10001'){
+                    $.alert('保存成功');
+                    //$('#tablesearchID').click();
+                    $('#searchID').click();
+                }else{
+                    $.alert('保存失败');
+                }
+            }
+        });
+    }
+    function checkboxProcess(index,row){
+        /* if($.inArray(row.NM,Array.from(overAllIds))!=-1){
+            return { checked:true} ;
+        } */
+    }
+
+    function delBath(){
+
+        var tablename=$('#tablenameid').val();
+        var _key=$('#keyid').val();
+        if(!tablename || !_key ){
+            $.alert('表名或者主键不能为空！');
+            return ;
+        }
+        var datas=$("#boot_table").bootstrapTable('getSelections');
+        var array=new Array();
+        var isDel=false;//'editable-unsaved';
+        $.each(datas,function(index,item){
+            array.push({'key':_key,'value':eval('item.'+_key)});
+        });
+        var data={};
+        data['condition']=JSON.stringify(array);
+        data['tablename']=tablename;
+        var dataUrl=basePath+'/bootInfo/delBathInfo';
+        // 调用后台
+        $.ajax({
+            url :dataUrl,//后台处理程序
+            type:"post",  //数据发送方式
+            async:false,   //同步为false,异步为true
+            dataType:"text", //接受数据格式
+            data:data,
+            success: function(result){//执行成功后
+                var da=eval('('+result+')');
+                resultdata=da;
+                if(resultdata.code=='10001'){
+                    $.alert('删除成功');
+                    $('#searchID').click();
+                }else{
+                    $.alert('删除失败');
+                }
+            }
+        });
+    }
+    //******************生成和维护表字段的业务逻辑**********************start//
+    var modifytablename;
+    var modifytableid;
+    //1在展示表内容中增加一列，有一个入口进入表维护字段里面
+    function toModifyColumns(tableid,tablename){
+        modifytablename=tablename;
+        modifytableid=tableid;
+        //查询表信息进行展示
+        console.log(tableid);
+        console.log(tablename);
+        //显示modal
+        //查询table
+        var dataUrl=basePath+'/share/findListSql';
+
+        var columns=new Array();
+        columns.push({field:'CHECKED',
+            title:'',
+            align:'center',
+            checkbox:"true" ,
+            formatter:function(value,row,index){
+                if(value=='0'){
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+        });
+
+        columns.push({field:'COLUMNNAME',
+            title:'中文名称',
+            align:'center',
+            editable:{
+                type:'text',
+                title:'中文名称'
+            }
+        });
+        columns.push({field:'COLUMNENAME',
+            title:'英文名称',
+            align:'center',
+            editable:{
+                type:'text',
+                title:'英文名称'
+            }
+        });
+        columns.push({field:'MATCHINFO',
+            title:'正则',
+            align:'center',
+            editable:{
+                type:'textarea',
+                title:'正则'
+            },
+            formatter:function(value,row,index){
+                return '/^[\s\S]{0,'+parseInt(Number(row.MAXLENGTH)/2)+'}$/';
+            }
+        });
+        columns.push({field:'ALERTINFO',
+            title:'正则提示',
+            align:'center',
+            editable:{
+                type:'textarea',
+                title:'正则提示'
+            },
+            formatter:function(value,row,index){
+                return '最大长度不可超过'+parseInt(Number(row.MAXLENGTH)/2)+'位';
+            }
+        });
+        var selectcoltypes=[];
+        var type={'S':'字符串','L':'长整型','I':'整形','D':'浮点类型','T':'时间','TD':'日期','M':'枚举','F':'附件','SF':'身份证号码','NM':'枚举库','MT':'枚举方法','CT':'中文日期','CL':'自定义校验'};
+        $.each(Object.keys(type),function(index,key){
+            var obj={};
+            obj[key]=type[key];
+            selectcoltypes.push(obj);
+        });
+        columns.push({field:'DATATYPE',
+            title:'字段类型',
+            align:'center',
+            editable:{
+                type:'select',
+                title:'字段类型',
+                source: selectcoltypes
+            },formatter:function(value,row,index){
+                return '';
+            }
+        });
+        columns.push({field:'ISNULL',
+            title:'是否为空',
+            align:'center',
+            editable:{
+                type:'select',
+                title:'字段类型',
+                pk:1,
+                source:[{0:'否'},{1:'是'}]
+            }
+        });
+        columns.push({field:'FINDDISPLAY',
+            title:'查询时是否展示',
+            align:'center',
+            editable:{
+                type:'select',
+                title:'查询时是否展示',
+                pk:1,
+                source:[{0:'否'},{1:'是'}]
+            }
+        });
+
+        /* $("#columnTableID").bootstrapTable('insertRow',{
+             index:$("#boot_table").bootstrapTable('getOptions').totalRows,
+             row:datas
+        }); */
+        $("#columnTableID").bootstrapTable('refreshOptions',{
+            url:basePath+'/share/findListSql',
+            columns:columns,
+            responseHandler: function(res) {
+                return {
+                    "rows": res.result   //数据
+                };
+            },
+        });
+        $('#table_columns_modal').modal('show');
+    }
+
+    //2一个modal框展示内容
+
+    //3modal中table列表
+    function columnparam(param){
+        param['paramconfig']=JSON.stringify({TABLENAME:modifytablename,TABLEID:modifytableid});
+        param['methodName']='findcolumsByTablename';
+        console.log('helllo');
+        return param;
+    }
+    function saveColumns(){
+        var datas=$("#columnTableID").bootstrapTable('getSelections');
+        var arr=[];
+        $.each(datas,function(index,item){
+            var obj=item;
+            delete obj.CHECKED;
+            delete obj.MAXLENGTH;
+            obj.ID='1';
+            obj.TABLEID=modifytableid;
+            arr.push(obj);
+        });
+        var data={};
+        data['addInfo']=JSON.stringify(arr);
+        data['tablename']='S_BASECOLUMN_CONFIG';
+        var dataUrl=basePath+'/bootInfo/batchInsertData';
+        // 调用后台
+        $.ajax({
+            url :dataUrl,//后台处理程序
+            type:"post",  //数据发送方式
+            async:false,   //同步为false,异步为true
+            dataType:"text", //接受数据格式
+            data:data,
+            success: function(result){//执行成功后
+                var da=eval('('+result+')');
+                resultdata=da;
+                if(resultdata.code=='10001'){
+                    $.alert('保存成功');
+                    $('#backid').click();
+                }else{
+                    $.alert('保存失败');
+                }
+            }
+        });
+    }
+    //******************生成和维护表字段的业务逻辑**********************end//
+</script>
+</html>
